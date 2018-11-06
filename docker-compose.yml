@@ -1,0 +1,26 @@
+version: '2'
+
+services:
+  memcached:
+    image: 'memcached:alpine'
+  php:
+    build: 'docker/php'
+    links:
+      - 'memcached'
+      - 'mongo'
+    volumes:
+      - './monitor-api:/var/www/monitor-api'
+  nginx:
+    image: 'nginx:latest'
+    ports:
+      - '8118:8080'
+    links:
+      - 'php'
+    volumes:
+      - './docker/nginx/monitor-api.conf:/etc/nginx/conf.d/monitor-api.conf'
+    volumes_from:
+      - 'php'
+  mongo:
+    image: 'mongo:latest'
+    ports:
+      - '27017:27017'
