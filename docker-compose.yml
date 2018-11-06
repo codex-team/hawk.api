@@ -3,8 +3,8 @@ version: '2'
 services:
   memcached:
     image: 'memcached:alpine'
-  php:
-    build: 'docker/php'
+  backend:
+    build: 'docker/backend'
     links:
       - 'memcached'
       - 'mongo'
@@ -15,11 +15,11 @@ services:
     ports:
       - '8118:8080'
     links:
-      - 'php'
+      - 'backend'
     volumes:
       - './docker/nginx/monitor-api.conf:/etc/nginx/conf.d/monitor-api.conf'
     volumes_from:
-      - 'php'
+      - 'backend'
   mongo:
     image: 'mongo:latest'
     ports:
