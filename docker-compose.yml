@@ -13,7 +13,7 @@ services:
   nginx:
     image: 'nginx:latest'
     ports:
-      - '8118:8080'
+      - '${NGINX_PORT}:8080'
     links:
       - 'backend'
     volumes:
@@ -23,4 +23,4 @@ services:
   mongo:
     image: 'mongo:latest'
     ports:
-      - '27017:27017'
+      - '${MONGO_PORT}:27017'
