@@ -1,0 +1,26 @@
+version: '2'
+
+services:
+  memcached:
+    image: 'memcached:alpine'
+  backend:
+    build: 'docker/backend'
+    links:
+      - 'memcached'
+      - 'mongo'
+    volumes:
+      - './monitor-api:/var/www/monitor-api'
+  nginx:
+    image: 'nginx:latest'
+    ports:
+      - '${NGINX_PORT}:8080'
+    links:
+      - 'backend'
+    volumes:
+      - './docker/nginx/monitor-api.conf:/etc/nginx/conf.d/monitor-api.conf'
+    volumes_from:
+      - 'backend'
+  mongo:
+    image: 'mongo:latest'
+    ports:
+      - '${MONGO_PORT}:27017'
