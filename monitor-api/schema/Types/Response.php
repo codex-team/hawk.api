@@ -2,7 +2,37 @@
 
 namespace App\Schema\Types;
 
-class Response
-{
+use GraphQL\Type\Definition\{
+    ObjectType,
+    Type
+};
 
+/**
+ * Class Response
+ *
+ * @package App\Schema\Types
+ */
+class Response extends ObjectType
+{
+    public function __construct()
+    {
+        $config = [
+            'fields' => [
+                'code' => [
+                    'type' => Type::int(),
+                    'description' => 'Response\'s code'
+                ],
+                'time' => [
+                    'type' => Type::float(),
+                    'description' => 'Response\'s time'
+                ],
+                'size' => [
+                    'type' => Type::int(),
+                    'description' => 'Response\'s size'
+                ]
+            ]
+        ];
+
+        parent::__construct($config);
+    }
 }
