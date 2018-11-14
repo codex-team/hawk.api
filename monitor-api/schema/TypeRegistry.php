@@ -24,6 +24,9 @@ class TypeRegistry
     private static $project;
     private static $response;
 
+    /**
+     * @return Query
+     */
     public static function query()
     {
         return self::$query ?: (self::$query = new Query());
