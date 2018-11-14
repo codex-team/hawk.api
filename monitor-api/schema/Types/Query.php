@@ -34,7 +34,7 @@ class Query extends ObjectType
                     ],
                     'project' => [
                         'type' => TypeRegistry::project(),
-                        'description' => 'Return all projects',
+                        'description' => 'Return projects',
                         'resolve' => function ($root, $args) {
                             return [
                                 //поля проекта
@@ -43,7 +43,7 @@ class Query extends ObjectType
                     ],
                     'response' => [
                         'type' => TypeRegistry::response(),
-                        'description' => 'Return all responses',
+                        'description' => 'Return response\'s data',
                         'resolve' => function ($root, $args) {
                             return [
                                 //поля ответа
