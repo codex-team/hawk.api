@@ -3,10 +3,10 @@
 namespace App\Schema;
 
 use App\Schema\Types\{
-    Query,
-    User,
     Project,
-    Response
+    Query,
+    Response,
+    User
 };
 
 /**
@@ -28,6 +28,7 @@ class TypeRegistry
     {
         return self::$query ?: (self::$query = new Query());
     }
+
     /**
      * @return User
      */

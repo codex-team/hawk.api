@@ -18,7 +18,7 @@ class Project extends ObjectType
     public function __construct()
     {
         $config = [
-            'fields' =>  function () {
+            'fields' => function () {
                 return [
                     'id' => [
                         'type' => Type::id(),

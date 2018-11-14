@@ -42,4 +42,3 @@ echo json_encode($result);
 
 //query and мутации
 //
-
