@@ -18,28 +18,30 @@ class User extends ObjectType
     public function __construct()
     {
         $config = [
-            'fields' => [
-                'id' => [
-                    'type' => Type::id(),
-                    'description' => 'User\'s unique identifier'
-                ],
-                'name' => [
-                    'type' => Type::string(),
-                    'description' => 'User\'s name'
-                ],
-                'email' => [
-                    'type' => Type::string(),
-                    'description' => 'User\'s email'
-                ],
-                'password' => [
-                    'type' => Type::string(),
-                    'description' => 'User\'s password'
-                ],
-                'projects' => [
-                    'type' => Type::listOf(TypeRegistry::project()),
-                    'description' => 'User\'s projects'
-                ]
-            ]
+            'fields' => function () {
+                return [
+                    'id' => [
+                        'type' => Type::id(),
+                        'description' => 'User\'s unique identifier'
+                    ],
+                    'name' => [
+                        'type' => Type::string(),
+                        'description' => 'User\'s name'
+                    ],
+                    'email' => [
+                        'type' => Type::string(),
+                        'description' => 'User\'s email'
+                    ],
+                    'password' => [
+                        'type' => Type::string(),
+                        'description' => 'User\'s password'
+                    ],
+                    'projects' => [
+                        'type' => Type::listOf(TypeRegistry::project()),
+                        'description' => 'User\'s projects'
+                    ]
+                ];
+            }
         ];
 
         parent::__construct($config);

@@ -17,20 +17,22 @@ class Response extends ObjectType
     public function __construct()
     {
         $config = [
-            'fields' => [
-                'code' => [
-                    'type' => Type::int(),
-                    'description' => 'Response\'s code'
-                ],
-                'time' => [
-                    'type' => Type::float(),
-                    'description' => 'Response\'s time'
-                ],
-                'size' => [
-                    'type' => Type::int(),
-                    'description' => 'Response\'s size'
-                ]
-            ]
+            'fields' => function () {
+                return [
+                    'code' => [
+                        'type' => Type::int(),
+                        'description' => 'Response\'s code'
+                    ],
+                    'time' => [
+                        'type' => Type::float(),
+                        'description' => 'Response\'s time'
+                    ],
+                    'size' => [
+                        'type' => Type::int(),
+                        'description' => 'Response\'s size'
+                    ]
+                ];
+            }
         ];
 
         parent::__construct($config);
