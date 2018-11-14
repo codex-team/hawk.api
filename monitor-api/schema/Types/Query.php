@@ -43,7 +43,7 @@ class Query extends ObjectType
                     ],
                     'response' => [
                         'type' => TypeRegistry::response(),
-                        'description' => 'Return response\'s data',
+                        'description' => 'Return response of request to project URL',
                         'resolve' => function ($root, $args) {
                             return [
                                 //поля ответа
