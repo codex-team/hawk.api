@@ -27,18 +27,29 @@ if (is_file(ROOT . '/.env')) {
     $de->load();
 }
 
-$rawInput = file_get_contents('php://input');
-$input = json_decode($rawInput, true);
-$query = $input['query'];
+try {
+    //получаем данные запроса в формате JSON
+    $rawInput = file_get_contents('php://input');
+    //декодируем JSON в ассоциативный массив
+    $input = json_decode($rawInput, true);
+    //получаем запрос из массива
+    $query = $input['query'];
 
-$schema = new Schema([
-    'query' => TypeRegistry::query()
-]);
+    //создаем схему для GraphQL
+    $schema = new Schema([
+        'query' => TypeRegistry::query()
+    ]);
 
-$result = GraphQL::executeQuery($schema, $query)->toArray();
+    //исполняем запрос
+    $result = GraphQL::executeQuery($schema, $query)->toArray();
+} catch (\Exception $e) {
+    $result = [
+        'error' => [
+            'message' => $e->getMessage()
+        ]
+    ];
+}
 
+//возвращаем ответ в виде JSON
 header('Content-Type: application/json; charset=UTF-8');
 echo json_encode($result);
-
-//query and мутации
-//
