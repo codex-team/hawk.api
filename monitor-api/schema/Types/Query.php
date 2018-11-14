@@ -20,21 +20,34 @@ class Query extends ObjectType
         $config = [
             'fields' => function () {
                 return [
-                    'hello' => [
-                        'type' => Type::string(),
-                        'description' => 'Возвращает приветствие',
-                        'resolve' => function () {
-                            return 'Привет, GraphQL!';
-                        }
-                    ],
                     'user' => [
                         'type' => TypeRegistry::user(),
                         'description' => 'Return User by id',
                         'args' => [
-                            'id' => Type::int()
+                            'id' => Type::nonNull(Type::id()),
                         ],
                         'resolve' => function ($root, $args) {
-                            return ['name' => 'ada'];
+                            return [
+                                //поля пользователя
+                            ];
+                        }
+                    ],
+                    'project' => [
+                        'type' => TypeRegistry::project(),
+                        'description' => 'Return all projects',
+                        'resolve' => function ($root, $args) {
+                            return [
+                                //поля проекта
+                            ];
+                        }
+                    ],
+                    'response' => [
+                        'type' => TypeRegistry::response(),
+                        'description' => 'Return all responses',
+                        'resolve' => function ($root, $args) {
+                            return [
+                                //поля ответа
+                            ];
                         }
                     ],
                 ];

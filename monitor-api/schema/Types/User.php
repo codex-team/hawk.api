@@ -2,7 +2,6 @@
 
 namespace App\Schema\Types;
 
-use App\Schema\TypeRegistry;
 use GraphQL\Type\Definition\{
     ObjectType,
     Type
@@ -37,8 +36,13 @@ class User extends ObjectType
                         'description' => 'User\'s password'
                     ],
                     'projects' => [
-                        'type' => Type::listOf(TypeRegistry::project()),
-                        'description' => 'User\'s projects'
+                        'type' => Type::string(),
+                        'description' => 'User\'s projects',
+                        'resolve' => function ($root, $args) {
+                            return [
+                                //проекты пользователей
+                            ];
+                        }
                     ]
                 ];
             }

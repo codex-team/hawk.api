@@ -34,7 +34,12 @@ class Project extends ObjectType
                     ],
                     'responses' => [
                         'type' => Type::listOf(TypeRegistry::response()),
-                        'description' => 'Project\'s responses'
+                        'description' => 'Project\'s responses',
+                        'resolve' => function ($root, $args) {
+                            return [
+                                //ответы проекта
+                            ];
+                        }
                     ],
                 ];
             }
