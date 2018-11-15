@@ -7,6 +7,11 @@ use GraphQL\Type\Definition\{
     ObjectType,
     Type
 };
+use App\Components\Models\{
+    User,
+    Project,
+    Response
+};
 
 /**
  * Class Mutation
@@ -25,7 +30,7 @@ class Mutation extends ObjectType
                         'description' => 'Sync User',
                         'args' => [
                             'id' => [
-                                'type' => Type::nonNull(Type::id()),
+                                'type' => Type::id(),
                                 'description' => 'Unique identifier'
                             ],
                             'name' => [
@@ -42,7 +47,11 @@ class Mutation extends ObjectType
                             ],
                         ],
                         'resolve' => function ($root, $args) {
-                            //добавляем/обновляем юзера
+                            $user = new User($args);
+
+                            $user->sync();
+
+                            return $user;
                         }
                     ],
                     'project' => [

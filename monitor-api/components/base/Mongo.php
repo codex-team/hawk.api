@@ -52,6 +52,6 @@ class Mongo
     {
         $db = $database ?? getenv('MONGO_DB');
 
-        return self::connection()->$db;
+        return self::connection()->selectDatabase($db);
     }
 }
