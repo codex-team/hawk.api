@@ -41,8 +41,11 @@ try {
         'mutation' => TypeRegistry::mutation()
     ]);
 
+    //полученаем переменные запроса
+    $variables = isset($input['variables']) ? json_decode($input['variables'], true) : null;
+
     //исполняем запрос
-    $result = GraphQL::executeQuery($schema, $query)->toArray();
+    $result = GraphQL::executeQuery($schema, $query, null, null, $variables)->toArray();
 } catch (\Exception $e) {
     $result = [
         'error' => [
