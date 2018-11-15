@@ -37,7 +37,8 @@ try {
 
     //создаем схему для GraphQL
     $schema = new Schema([
-        'query' => TypeRegistry::query()
+        'query' => TypeRegistry::query(),
+        'mutation' => TypeRegistry::mutation()
     ]);
 
     //исполняем запрос

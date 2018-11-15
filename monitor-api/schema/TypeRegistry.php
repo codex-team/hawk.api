@@ -3,6 +3,7 @@
 namespace App\Schema;
 
 use App\Schema\Types\{
+    Mutation,
     Project,
     Query,
     Response,
@@ -20,6 +21,7 @@ class TypeRegistry
      * Custom types for GraphQL
      */
     private static $query;
+    private static $mutation;
     private static $user;
     private static $project;
     private static $response;
@@ -30,6 +32,14 @@ class TypeRegistry
     public static function query()
     {
         return self::$query ?: (self::$query = new Query());
+    }
+
+    /**
+     * @return Mutation
+     */
+    public static function mutation()
+    {
+        return self::$mutation ?: (self::$mutation = new Mutation());
     }
 
     /**
