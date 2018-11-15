@@ -20,9 +20,14 @@ define('ROOT', __DIR__);
 require_once ROOT . '/vendor/autoload.php';
 
 /**
+ * Exception handling.
+ */
+set_exception_handler('App\Components\Base\Error::exceptionHandler');
+
+/**
  * Load .env
  */
-if (is_file(ROOT . '/.env')) {
+if (file_exists(ROOT . '/.env')) {
     $de = new Dotenv(ROOT);
     $de->load();
 }
