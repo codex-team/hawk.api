@@ -2,15 +2,15 @@
 
 namespace App\Schema\Types;
 
+use App\Components\Models\{
+    Project,
+    Response,
+    User
+};
 use App\Schema\TypeRegistry;
 use GraphQL\Type\Definition\{
     ObjectType,
     Type
-};
-use App\Components\Models\{
-    User,
-    Project,
-    Response
 };
 
 /**
@@ -59,7 +59,7 @@ class Mutation extends ObjectType
                         'description' => 'Sync Project',
                         'args' => [
                             'id' => [
-                                'type' => Type::nonNull(Type::id()),
+                                'type' => Type::id(),
                                 'description' => 'Unique identifier'
                             ],
                             'name' => [
@@ -72,7 +72,11 @@ class Mutation extends ObjectType
                             ],
                         ],
                         'resolve' => function ($root, $args) {
-                            //добавляем/обновляем проект
+                            $project = new Project($args);
+
+                            $project->sync();
+
+                            return $project;
                         }
                     ],
                     'response' => [

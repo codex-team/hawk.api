@@ -2,6 +2,11 @@
 
 namespace App\Schema\Types;
 
+use App\Components\Models\{
+    Project,
+    Response,
+    User
+};
 use App\Schema\TypeRegistry;
 use GraphQL\Type\Definition\{
     ObjectType,
@@ -27,9 +32,11 @@ class Query extends ObjectType
                             'id' => Type::nonNull(Type::id()),
                         ],
                         'resolve' => function ($root, $args) {
-                            return [
-                                //поля пользователя
-                            ];
+                            $user = new User();
+
+                            $user->findOne($args['id']);
+
+                            return $user;
                         }
                     ],
                     'project' => [
