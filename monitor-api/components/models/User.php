@@ -2,8 +2,6 @@
 
 namespace App\Components\Models;
 
-use App\Components\Base\Mongo;
-
 class User extends BaseModel
 {
     /**
@@ -34,34 +32,39 @@ class User extends BaseModel
      */
     public $password;
 
+    /**
+     * Raw arguments for updating/inserting.
+     *
+     * @var array
+     */
+    public $rawArgs;
+
+    /**
+     * User constructor.
+     *
+     * @param array $args
+     */
     public function __construct(array $args = [])
     {
         if (!empty($args)) {
+            $this->rawArgs = $args;
             $this->fillModel($args);
         }
     }
 
     /**
-     * Create or update User
+     * Create or Update user
+     *
+     * @throws \Exception
      */
-    public function sync()
+    public function sync(): void
     {
-        var_dump(Mongo::database()->users->insertOne(['name' => 'adasda']));
+        $mongoResult = $this->baseSync($this->id, $this->rawArgs);
+
+        $this->fillModel($mongoResult);
     }
 
     /**
-     * Find user by $id
-     *
-     * @param int $id
-     */
-    public function find(int $id)
-    {
-
-    }
-
-    /**
-     * Return collection name
-     *
      * @return string
      */
     public function collectionName(): string
