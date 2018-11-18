@@ -32,14 +32,14 @@ abstract class BaseModel
     /**
      * Base sync for child
      *
-     * @param string $id
-     * @param array  $args
+     * @param null|string $id
+     * @param array       $args
      *
      * @throws \Exception
      *
-     * @return
+     * @return array|null|object
      */
-    protected function baseSync(string $id, array $args)
+    protected function baseSync(?string $id, array $args)
     {
         $mongoResult = [];
         $collection = $this->assocCollection();
@@ -71,6 +71,28 @@ abstract class BaseModel
     }
 
     abstract public function sync(): void;
+
+    /**
+     * Return all records from collection
+     *
+     * @return array
+     */
+    public function all(): array
+    {
+        $collection = $this->assocCollection();
+
+        $cursor = $collection->find();
+
+        $result = [];
+
+        foreach ($cursor as $value) {
+            $object = new static();
+            $object->fillModel($value);
+            $result[] = $object;
+        }
+
+        return $result;
+    }
 
     /**
      * Find model by _id

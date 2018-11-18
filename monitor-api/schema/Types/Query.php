@@ -48,6 +48,15 @@ class Query extends ObjectType
                             ];
                         }
                     ],
+                    'projects' => [
+                        'type' => Type::listOf(TypeRegistry::project()),
+                        'description' => 'Return all projects',
+                        'resolve' => function ($root, $args) {
+                            $projects = new Project();
+
+                            return $projects->all();
+                        }
+                    ],
                     'response' => [
                         'type' => TypeRegistry::response(),
                         'description' => 'Return response of request to project URL',

@@ -6,6 +6,7 @@ namespace App;
 
 use App\Schema\TypeRegistry;
 use Dotenv\Dotenv;
+use GraphQL\Error\Debug;
 use GraphQL\GraphQL;
 use GraphQL\Type\Schema;
 
@@ -40,7 +41,7 @@ try {
     //получаем запрос из массива
     $query = $input['query'];
 
-    //создаем схему для GraphQL
+    //создаем схему для GraphQL (запросы и мутации)
     $schema = new Schema([
         'query' => TypeRegistry::query(),
         'mutation' => TypeRegistry::mutation()
@@ -49,8 +50,9 @@ try {
     //полученаем переменные запроса
     $variables = isset($input['variables']) ? json_decode($input['variables'], true) : null;
 
-    //исполняем запрос
-    $result = GraphQL::executeQuery($schema, $query, null, null, $variables)->toArray();
+    //исполняем запрос и дебажим исполнение
+    $debug = Debug::INCLUDE_DEBUG_MESSAGE | Debug::INCLUDE_TRACE;
+    $result = GraphQL::executeQuery($schema, $query, null, null, $variables)->toArray($debug);
 } catch (\Exception $e) {
     $result = [
         'error' => [

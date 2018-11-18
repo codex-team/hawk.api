@@ -26,14 +26,14 @@ class Project extends BaseModel
     public $url;
 
     /**
-     * Raw arguments for updating/inserting.
+     * Raw arguments for updating/inserting
      *
      * @var array
      */
     public $rawArgs;
 
     /**
-     * User constructor.
+     * User constructor
      *
      * @param array $args
      */
@@ -57,8 +57,11 @@ class Project extends BaseModel
         $this->fillModel($mongoResult);
     }
 
+    /**
+     * @return string
+     */
     public function collectionName(): string
     {
-        return 'users';
+        return 'projects';
     }
 }
