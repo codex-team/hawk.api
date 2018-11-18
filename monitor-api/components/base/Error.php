@@ -22,7 +22,7 @@ class Error
 
         $message = "Uncaught exception: '" . get_class($exception) . "'" . PHP_EOL;
         $message .= "Message: '" . $exception->getMessage() . "'" . PHP_EOL;
-        $message .= "Stack trace: " . PHP_EOL . $exception->getTraceAsString() . PHP_EOL;
+        $message .= 'Stack trace: ' . PHP_EOL . $exception->getTraceAsString() . PHP_EOL;
         $message .= "Thrown in '" . $exception->getFile() . "' on line " .
             $exception->getLine() . PHP_EOL;
 
