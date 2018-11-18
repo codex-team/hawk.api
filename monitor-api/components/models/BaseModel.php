@@ -44,6 +44,8 @@ abstract class BaseModel
         $mongoResult = [];
         $collection = $this->assocCollection();
 
+        unset($args['id']);
+
         if ($id) {
             $query['_id'] = new ObjectId($id);
 
@@ -55,8 +57,6 @@ abstract class BaseModel
             $update = [
                 '$set' => $args
             ];
-
-            unset($args['id']);
 
             $mongoResult = $collection->findOneAndUpdate($query, $update, $options);
 
