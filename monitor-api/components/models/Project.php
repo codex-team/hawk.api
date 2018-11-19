@@ -1,9 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Components\Models;
 
 class Project extends BaseModel
 {
+    const COLLECTION_NAME = 'projects';
+
     /**
      * Project's unique identifier
      *
@@ -62,6 +66,6 @@ class Project extends BaseModel
      */
     public function collectionName(): string
     {
-        return 'projects';
+        return self::COLLECTION_NAME;
     }
 }

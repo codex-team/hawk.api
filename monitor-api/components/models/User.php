@@ -1,9 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Components\Models;
 
 class User extends BaseModel
 {
+    const COLLECTION_NAME = 'users';
+
     /**
      * User's unique identifier
      *
@@ -69,6 +73,6 @@ class User extends BaseModel
      */
     public function collectionName(): string
     {
-        return 'users';
+        return self::COLLECTION_NAME;
     }
 }
