@@ -6,6 +6,7 @@ namespace App;
 
 use App\Schema\TypeRegistry;
 use Dotenv\Dotenv;
+use GraphQL\Error\Debug;
 use GraphQL\GraphQL;
 use GraphQL\Type\Schema;
 
@@ -20,9 +21,14 @@ define('ROOT', __DIR__);
 require_once ROOT . '/vendor/autoload.php';
 
 /**
+ * Exception handling.
+ */
+set_exception_handler('App\Components\Base\Error::exceptionHandler');
+
+/**
  * Load .env
  */
-if (is_file(ROOT . '/.env')) {
+if (file_exists(ROOT . '/.env')) {
     $de = new Dotenv(ROOT);
     $de->load();
 }
@@ -34,14 +40,18 @@ try {
     $input = json_decode($rawInput, true);
     //получаем запрос из массива
     $query = $input['query'];
+    //полученаем переменные запроса
+    $variables = isset($input['variables']) ? json_decode($input['variables'], true) : null;
 
-    //создаем схему для GraphQL
+    //создаем схему для GraphQL (запросы и мутации)
     $schema = new Schema([
-        'query' => TypeRegistry::query()
+        'query' => TypeRegistry::query(),
+        'mutation' => TypeRegistry::mutation()
     ]);
 
-    //исполняем запрос
-    $result = GraphQL::executeQuery($schema, $query)->toArray();
+    //исполняем запрос и дебажим исполнение
+    $debug = Debug::INCLUDE_DEBUG_MESSAGE | Debug::INCLUDE_TRACE;
+    $result = GraphQL::executeQuery($schema, $query, null, null, $variables)->toArray($debug);
 } catch (\Exception $e) {
     $result = [
         'error' => [

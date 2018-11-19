@@ -1,7 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Schema\Types;
 
+use App\Components\Models\{
+    Project,
+    Response,
+    User
+};
 use App\Schema\TypeRegistry;
 use GraphQL\Type\Definition\{
     ObjectType,
@@ -27,9 +34,11 @@ class Query extends ObjectType
                             'id' => Type::nonNull(Type::id()),
                         ],
                         'resolve' => function ($root, $args) {
-                            return [
-                                //поля пользователя
-                            ];
+                            $user = new User();
+
+                            $user->findOne($args['id']);
+
+                            return $user;
                         }
                     ],
                     'project' => [
@@ -39,6 +48,15 @@ class Query extends ObjectType
                             return [
                                 //поля проекта
                             ];
+                        }
+                    ],
+                    'projects' => [
+                        'type' => Type::listOf(TypeRegistry::project()),
+                        'description' => 'Return all projects',
+                        'resolve' => function ($root, $args) {
+                            $projects = new Project();
+
+                            return $projects->all();
                         }
                     ],
                     'response' => [
