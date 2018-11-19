@@ -4,12 +4,18 @@ declare(strict_types=1);
 
 namespace App\Components\Base;
 
-use MongoDB\Client as Client;
+use MongoDB\Client;
 
 class Mongo
 {
     private static $connection;
-    private static $instance;
+
+    /**
+     * Mongo constructor that can't be called.
+     */
+    private function __construct()
+    {
+    }
 
     /**
      * Get connection to mongo
@@ -20,10 +26,6 @@ class Mongo
      */
     public static function connection(string $database = null)
     {
-        if (!isset(self::$instance)) {
-            self::$instance = new Mongo();
-        }
-
         if (!isset(self::$connection)) {
             $domain = getenv('MONGO_HOST') ?? 'localhost';
             $port = getenv('MONGO_PORT') ?? 27017;
