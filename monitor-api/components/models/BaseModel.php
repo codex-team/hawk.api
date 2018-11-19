@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Components\Models;
 
+use App\Components\Base\Exceptions\ModelException;
 use App\Components\Base\Mongo;
 use MongoDB\BSON\ObjectId;
 use MongoDB\Collection;
@@ -14,6 +17,10 @@ abstract class BaseModel
      * @param array $args
      */
     abstract public function __construct(array $args = []);
+
+    abstract public function collectionName(): string;
+
+    abstract public function sync(): void;
 
     /**
      * Fill the model fields
@@ -61,7 +68,7 @@ abstract class BaseModel
             $mongoResult = $collection->findOneAndUpdate($query, $update, $options);
 
             if ($mongoResult === null) {
-                throw new \Exception("Record with _id = $id not found");
+                throw new ModelException("Record with _id = $id not found in {$this->collectionName()}");
             }
         } else {
             $mongoResult['id'] = $collection->insertOne($args)->getInsertedId();
@@ -69,8 +76,6 @@ abstract class BaseModel
 
         return $mongoResult;
     }
-
-    abstract public function sync(): void;
 
     /**
      * Return all records from collection
@@ -86,9 +91,7 @@ abstract class BaseModel
         $result = [];
 
         foreach ($cursor as $value) {
-            $object = new static();
-            $object->fillModel($value);
-            $result[] = $object;
+            $result[] = new static($value);
         }
 
         return $result;
@@ -117,6 +120,4 @@ abstract class BaseModel
     {
         return Mongo::database()->{$this->collectionName()};
     }
-
-    abstract public function collectionName(): string;
 }
