@@ -6,9 +6,9 @@ namespace App;
 
 use App\Schema\TypeRegistry;
 use Dotenv\Dotenv;
+use GraphQL\Error\Debug;
 use GraphQL\GraphQL;
 use GraphQL\Type\Schema;
-use GraphQL\Error\Debug;
 
 /**
  * Define project's root

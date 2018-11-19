@@ -37,7 +37,7 @@ abstract class BaseModel
     }
 
     /**
-     * Base sync for child
+     * Insert or Update model record in collection
      *
      * @param null|string $id
      * @param array       $args
