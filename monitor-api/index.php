@@ -4,12 +4,6 @@ declare(strict_types=1);
 
 namespace App;
 
-use App\Schema\TypeRegistry;
-use Dotenv\Dotenv;
-use GraphQL\Error\Debug;
-use GraphQL\GraphQL;
-use GraphQL\Type\Schema;
-
 /**
  * Define project's root
  */
@@ -20,10 +14,17 @@ define('ROOT', __DIR__);
  */
 require_once ROOT . '/vendor/autoload.php';
 
+use App\Schema\TypeRegistry;
+use Dotenv\Dotenv;
+use GraphQL\Error\Debug;
+use GraphQL\GraphQL;
+use GraphQL\Type\Schema;
+
+
 /**
  * Exception handling.
  */
-set_exception_handler(['\App\Components\Base\Error', 'exceptionHandler']);
+//set_exception_handler(['\App\Components\Base\Error', 'exceptionHandler']);
 
 /**
  * Load .env
