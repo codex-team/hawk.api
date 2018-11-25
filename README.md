@@ -7,9 +7,21 @@ Easy to use API to save/retrieve all data, related to monitor project.
 ```graphql
 mutation CreateProject {
   project(
-    id:"5a70ac62e1d8ff5cda8322a0",
     name:"HAWK",
     url:"https://hawk.so"
+  ){
+    name,
+    url
+  }
+}
+```
+### Update Project
+```graphql
+mutation UpdateProject {
+  project(
+    id:"5a70ac62e1d8ff5cda8322a0",
+    name:"Capella",
+    url:"https://capella.pic"
   ){
     name,
     url
