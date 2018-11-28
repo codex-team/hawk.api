@@ -45,7 +45,7 @@ query AllProjects {
 }
 ```
 
-## Deployment steps
+## Deployment without DOCKER
 1. Everything about PHP
 ```
 add-apt-repository ppa:ondrej/php
@@ -55,3 +55,7 @@ pecl install mongodb (than add to php.ini as "extension=mongodb.so")
 2. Follow this <a href="https://getcomposer.org/download/">link</a> to install Composer and then make it global
 3. Follow this <a href="https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/">link</a> to install the correct version of MongoDB
 4. Configure your nginx according to this <a href="https://ifmo.su/devops-basics">article</a>
+
+## Deployment with DOCKER
+1. Download and setup Docker from the official  <a href="https://www.docker.com/products/docker-desktop">site</a>
+2. In project root directory run ```docker-compose up --build```
