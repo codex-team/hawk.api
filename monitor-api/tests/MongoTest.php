@@ -22,7 +22,7 @@ class MongoTest extends TestCase
     public function testDatabase()
     {
         $connection = Mongo::database();
-        $this->assertEquals(getenv('MONGO_DB'),  $connection->getDatabaseName());
+        $this->assertEquals(getenv('MONGO_DB'), $connection->getDatabaseName());
     }
 
     public function testProperSingleton()
