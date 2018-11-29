@@ -60,11 +60,17 @@ curl -X POST -H "Content-Type: application/json" \
 2. In project root directory run ```docker-compose up --build```
 
 ### Server
-1. Install PHP@7.2
+1. Install PHP@7.2 with required dependencies
 ```
 add-apt-repository ppa:ondrej/php
 apt-get install nginx php php-pear php-dev php-mbstring unzip -y
-pecl install mongodb (than add to php.ini as "extension=mongodb.so")
+pecl install mongodb
+```
+3. Configure php.ini file to add extension=mongodb.so
+```
+php --ini
+(path for example will be – Loaded Configuration File: /usr/local/etc/php/7.2/php.ini)
+echo "extension=mongodb.so" >> /usr/local/etc/php/7.2/php.ini
 ```
 2. Follow this <a href="https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/">link</a> to install the correct version of MongoDB
 3. Follow this <a href="https://getcomposer.org/download/">link</a> to install Composer and then make it global
