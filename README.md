@@ -1,8 +1,7 @@
-# The API-Server of "uptime-monitor" project
+# The GraphQL-API-Server of "uptime-monitor" project
 Easy to use API to save/retrieve all data, related to monitor project.
 
-## GraphQL API
-
+## Available API methods
 ### Create Project
 ```graphql
 mutation CreateProject {
@@ -15,6 +14,7 @@ mutation CreateProject {
   }
 }
 ```
+
 ### Update Project
 ```graphql
 mutation UpdateProject {
@@ -28,6 +28,7 @@ mutation UpdateProject {
   }
 }
 ```
+
 #### Parameters
 | Parameter | Type | Description |
 | -- | -- | -- |
@@ -45,17 +46,26 @@ query AllProjects {
 }
 ```
 
-## Deployment without DOCKER
-1. Everything about PHP
+## How to send a request?
+To test API you can use <a href="https://insomnia.rest">Insomnia</a>\
+For cURL request to GraphQL it looks like:
+```
+curl -X POST -H "Content-Type: application/json" \ 
+--data '{ "query": "{ projects { name, url } }" }' https://api.monitor.ifmo.su 
+```
+
+## Deployment
+### Docker
+1. Download and setup Docker from the official  <a href="https://www.docker.com/products/docker-desktop">site</a>
+2. In project root directory run ```docker-compose up --build```
+
+### Server
+1. Install PHP@7.2
 ```
 add-apt-repository ppa:ondrej/php
 apt-get install nginx php php-pear php-dev php-mbstring unzip -y
 pecl install mongodb (than add to php.ini as "extension=mongodb.so")
 ```
-2. Follow this <a href="https://getcomposer.org/download/">link</a> to install Composer and then make it global
-3. Follow this <a href="https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/">link</a> to install the correct version of MongoDB
+2. Follow this <a href="https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/">link</a> to install the correct version of MongoDB
+3. Follow this <a href="https://getcomposer.org/download/">link</a> to install Composer and then make it global
 4. Configure your nginx according to this <a href="https://ifmo.su/devops-basics">article</a>
-
-## Deployment with DOCKER
-1. Download and setup Docker from the official  <a href="https://www.docker.com/products/docker-desktop">site</a>
-2. In project root directory run ```docker-compose up --build```
