@@ -3,6 +3,7 @@
 namespace App\Tests;
 
 use App\Components\Base\Mongo;
+use MongoDB\Driver\Exception\ConnectionTimeoutException;
 use PHPUnit\Framework\TestCase;
 
 class MongoTest extends TestCase
@@ -10,12 +11,18 @@ class MongoTest extends TestCase
     public function testConnection()
     {
         $connection = Mongo::connection();
-        $connection->listDatabases();
+
+        try {
+            $connection->listDatabases();
+        } catch (ConnectionTimeoutException $e) {
+            $this->fail($e->getMessage());
+        }
     }
 
     public function testDatabase()
     {
-        //TODO: write test case for Database connection
+        $connection = Mongo::database();
+        $this->assertEquals(getenv('MONGO_DB'),  $connection->getDatabaseName());
     }
 
     public function testProperSingleton()
