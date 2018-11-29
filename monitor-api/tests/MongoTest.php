@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 class MongoTest extends TestCase
 {
-    public function testConnection()
+    public function testConnection(): void
     {
         $connection = Mongo::connection();
 
@@ -19,13 +19,13 @@ class MongoTest extends TestCase
         }
     }
 
-    public function testDatabase()
+    public function testDatabase(): void
     {
         $connection = Mongo::database();
         $this->assertEquals(getenv('MONGO_DB'), $connection->getDatabaseName());
     }
 
-    public function testProperSingleton()
+    public function testProperSingleton(): void
     {
         $a = Mongo::connection();
         $b = Mongo::connection();

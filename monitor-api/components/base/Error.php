@@ -16,7 +16,7 @@ class Error
      *
      * @param \Exception $exception The exception
      */
-    public static function exceptionHandler($exception)
+    public static function exceptionHandler($exception): void
     {
         $log = ROOT . '/logs/' . date('d-m-Y') . '.txt';
 

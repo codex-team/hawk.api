@@ -31,7 +31,7 @@ class TypeRegistry
     /**
      * @return Query
      */
-    public static function query()
+    public static function query(): Query
     {
         return self::$query ?: (self::$query = new Query());
     }
@@ -39,7 +39,7 @@ class TypeRegistry
     /**
      * @return Mutation
      */
-    public static function mutation()
+    public static function mutation(): Mutation
     {
         return self::$mutation ?: (self::$mutation = new Mutation());
     }
@@ -47,7 +47,7 @@ class TypeRegistry
     /**
      * @return User
      */
-    public static function user()
+    public static function user(): User
     {
         return self::$user ?: (self::$user = new User());
     }
@@ -55,7 +55,7 @@ class TypeRegistry
     /**
      * @return Project
      */
-    public static function project()
+    public static function project(): Project
     {
         return self::$project ?: (self::$project = new Project());
     }
@@ -63,7 +63,7 @@ class TypeRegistry
     /**
      * @return Response
      */
-    public static function response()
+    public static function response(): Response
     {
         return self::$response ?: (self::$response = new Response());
     }

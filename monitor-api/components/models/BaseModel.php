@@ -102,7 +102,7 @@ abstract class BaseModel
      *
      * @param string $id
      */
-    public function findOne(string $id)
+    public function findOne(string $id): void
     {
         $collection = $this->assocCollection();
 

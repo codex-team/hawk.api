@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Components\Base;
 
 use MongoDB\Client;
+use MongoDB\Database;
 
 class Mongo
 {
@@ -24,7 +25,7 @@ class Mongo
      *
      * @return Client
      */
-    public static function connection(string $database = null)
+    public static function connection(string $database = null): Client
     {
         if (!isset(self::$connection)) {
             $domain = getenv('MONGO_HOST') ?? 'localhost';
@@ -52,7 +53,7 @@ class Mongo
      *
      * @return \MongoDB\Database
      */
-    public static function database(string $database = null)
+    public static function database(string $database = null): Database
     {
         $db = $database ?? getenv('MONGO_DB');
 
