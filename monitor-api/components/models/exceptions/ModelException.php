@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Components\Base\Exceptions;
+namespace App\Components\Models\Exceptions;
 
 /**
  * Class ModelException

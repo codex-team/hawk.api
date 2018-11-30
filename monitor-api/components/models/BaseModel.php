@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Components\Models;
 
-use App\Components\Base\Exceptions\ModelException;
 use App\Components\Base\Mongo;
+use App\Components\Models\Exceptions\ModelException;
 use MongoDB\BSON\ObjectId;
 use MongoDB\Collection;
 
@@ -102,7 +102,7 @@ abstract class BaseModel
      *
      * @param string $id
      */
-    public function findOne(string $id)
+    public function findOne(string $id): void
     {
         $collection = $this->assocCollection();
 
