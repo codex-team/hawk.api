@@ -34,6 +34,10 @@ class Project extends ObjectType
                         'type' => Type::string(),
                         'description' => 'Project\'s URL'
                     ],
+                    'webhooks' => [
+                        'type' => Type::listOf(Type::string()),
+                        'description' => 'Project\'s webhooks'
+                    ],
                     'responses' => [
                         'type' => Type::listOf(TypeRegistry::response()),
                         'description' => 'Project\'s responses',
