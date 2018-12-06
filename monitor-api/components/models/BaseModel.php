@@ -29,6 +29,10 @@ abstract class BaseModel
      */
     protected function fillModel(array $data): void
     {
+        if (array_key_exists('_id', $data)) {
+            $this->id = $data['_id'];
+        }
+
         foreach ($data as $key => $value) {
             if (property_exists($this, $key)) {
                 $this->$key = $value;
