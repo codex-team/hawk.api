@@ -72,8 +72,8 @@ class Mutation extends ObjectType
                                 'type' => Type::nonNull(Type::string()),
                                 'description' => 'URL address'
                             ],
-                            'webhook' => [
-                                'type' => Type::nonNull(Type::string()),
+                            'webhooks' => [
+                                'type' => Type::listOf(Type::string()),
                                 'description' => 'Webhook URL'
                             ],
                         ],
