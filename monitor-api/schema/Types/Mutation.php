@@ -65,12 +65,16 @@ class Mutation extends ObjectType
                                 'description' => 'Unique identifier'
                             ],
                             'name' => [
-                                'type' => Type::nonNull(Type::string()),
+                                'type' => Type::string(),
                                 'description' => 'Alias name'
                             ],
                             'url' => [
                                 'type' => Type::nonNull(Type::string()),
                                 'description' => 'URL address'
+                            ],
+                            'webhook' => [
+                                'type' => Type::nonNull(Type::string()),
+                                'description' => 'Webhook URL'
                             ],
                         ],
                         'resolve' => function ($root, $args) {

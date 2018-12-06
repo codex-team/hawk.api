@@ -30,6 +30,13 @@ class Project extends BaseModel
     public $url;
 
     /**
+     * Project's WebHook
+     *
+     * @var string|null
+     */
+    public $webhook;
+
+    /**
      * Raw arguments for updating/inserting
      *
      * @var array
