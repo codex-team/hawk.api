@@ -39,22 +39,22 @@ abstract class BaseModel
     /**
      * Insert or Update model record in collection
      *
-     * @param null|string $id
+     * @param null|string $_id
      * @param array       $args
      *
      * @throws \Exception
      *
      * @return array|null|object
      */
-    protected function baseSync(?string $id, array $args)
+    protected function baseSync(?string $_id, array $args)
     {
         $mongoResult = [];
         $collection = $this->assocCollection();
 
-        unset($args['id']);
+        unset($args['_id']);
 
-        if ($id) {
-            $query['_id'] = new ObjectId($id);
+        if ($_id) {
+            $query['_id'] = new ObjectId($_id);
 
             $options = [
                 'upsert' => true,
@@ -71,7 +71,7 @@ abstract class BaseModel
                 throw new ModelException("Record with _id = $id not found in {$this->collectionName()}");
             }
         } else {
-            $mongoResult['id'] = $collection->insertOne($args)->getInsertedId();
+            $mongoResult['_id'] = $collection->insertOne($args)->getInsertedId();
         }
 
         return $mongoResult;
