@@ -22,28 +22,48 @@ class Project extends ObjectType
         $config = [
             'fields' => function () {
                 return [
-                    'id' => [
-                        'type' => Type::id(),
+                    '_id' => [
+                        'type' => Type::string(),
                         'description' => 'Project\'s unique identifier'
+                    ],
+                    'id_added' => [
+                        'type' => Type::string(),
+                        'description' => 'Owner\'s unique identifier'
+                    ],
+                    'token' => [
+                        'type' => Type::string(),
+                        'description' => 'Project public token'
                     ],
                     'name' => [
                         'type' => Type::string(),
-                        'description' => 'Project\'s name'
+                        'description' => 'Project name'
                     ],
-                    'url' => [
+                    'description' => [
                         'type' => Type::string(),
-                        'description' => 'Project\'s URL'
+                        'description' => 'Project description'
                     ],
-                    'webhooks' => [
-                        'type' => Type::listOf(Type::string()),
-                        'description' => 'Project\'s webhooks'
+                    'domain' => [
+                        'type' => Type::string(),
+                        'description' => 'Project domain'
                     ],
-                    'responses' => [
-                        'type' => Type::listOf(TypeRegistry::response()),
-                        'description' => 'Project\'s responses',
+                    'uri' => [
+                        'type' => Type::string(),
+                        'description' => 'Project URI'
+                    ],
+                    'logo' => [
+                        'type' => Type::string(),
+                        'description' => 'Project logo URL'
+                    ],
+                    'dt_added' => [
+                        'type' => Type::string(),
+                        'description' => 'Project creation date'
+                    ],
+                    'teams' => [
+                        'type' => Type::listOf(),
+                        'description' => 'Project\'s teams',
                         'resolve' => function ($root, $args) {
                             return [
-                                //ответы проекта
+                                //команды проекта
                             ];
                         }
                     ],
