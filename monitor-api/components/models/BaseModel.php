@@ -68,7 +68,7 @@ abstract class BaseModel
             $mongoResult = $collection->findOneAndUpdate($query, $update, $options);
 
             if ($mongoResult === null) {
-                throw new ModelException("Record with _id = $id not found in {$this->collectionName()}");
+                throw new ModelException("Record with _id = $_id not found in {$this->collectionName()}");
             }
         } else {
             $mongoResult['_id'] = $collection->insertOne($args)->getInsertedId();
