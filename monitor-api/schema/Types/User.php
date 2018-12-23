@@ -22,13 +22,9 @@ class User extends ObjectType
         $config = [
             'fields' => function () {
                 return [
-                    'id' => [
+                    '_id' => [
                         'type' => Type::id(),
                         'description' => 'User\'s unique identifier'
-                    ],
-                    'name' => [
-                        'type' => Type::string(),
-                        'description' => 'User\'s name'
                     ],
                     'email' => [
                         'type' => Type::string(),

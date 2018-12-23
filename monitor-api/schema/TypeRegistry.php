@@ -59,12 +59,4 @@ class TypeRegistry
     {
         return self::$project ?: (self::$project = new Project());
     }
-
-    /**
-     * @return Response
-     */
-    public static function response(): Response
-    {
-        return self::$response ?: (self::$response = new Response());
-    }
 }

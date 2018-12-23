@@ -13,14 +13,7 @@ class User extends BaseModel
      *
      * @var string|null
      */
-    public $id;
-
-    /**
-     * User's nickname
-     *
-     * @var string|null
-     */
-    public $name;
+    public $_id;
 
     /**
      * User's email address
@@ -69,6 +62,8 @@ class User extends BaseModel
     }
 
     /**
+     * Return collection name
+     *
      * @return string
      */
     public function collectionName(): string
