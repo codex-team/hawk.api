@@ -6,7 +6,7 @@ namespace App\Components\Models;
 
 class User extends BaseModel
 {
-    const COLLECTION_NAME = 'users';
+    protected const COLLECTION_NAME = 'users';
 
     /**
      * User's unique identifier
@@ -56,7 +56,7 @@ class User extends BaseModel
      */
     public function sync(): void
     {
-        $mongoResult = $this->baseSync($this->id, $this->rawArgs);
+        $mongoResult = $this->baseSync($this->_id, $this->rawArgs);
 
         $this->fillModel($mongoResult);
     }

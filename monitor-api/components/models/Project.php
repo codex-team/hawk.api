@@ -6,7 +6,7 @@ namespace App\Components\Models;
 
 class Project extends BaseModel
 {
-    const COLLECTION_NAME = 'projects';
+    protected const COLLECTION_NAME = 'projects';
 
     /**
      * Project's unique identifier
