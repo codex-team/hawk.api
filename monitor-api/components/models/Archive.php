@@ -31,9 +31,9 @@ class Archive extends BaseModel
     public $role;
 
     /**
-     * Archive's tags
+     * Archive's tag
      *
-     * @var array
+     * @var string
      */
     public $tag;
 
