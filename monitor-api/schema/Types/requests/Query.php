@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Schema\Types;
+namespace App\Schema\Types\Requests;
 
 use App\Components\Models\{
     Project,
-    Response,
     User
 };
 use App\Schema\TypeRegistry;
@@ -29,14 +28,14 @@ class Query extends ObjectType
                 return [
                     'user' => [
                         'type' => TypeRegistry::user(),
-                        'description' => 'Return User by id',
+                        'description' => 'Return User by _id',
                         'args' => [
                             'id' => Type::nonNull(Type::id()),
                         ],
                         'resolve' => function ($root, $args) {
                             $user = new User();
 
-                            $user->findOne($args['id']);
+                            $user->findOne($args['_id']);
 
                             return $user;
                         }
@@ -58,16 +57,7 @@ class Query extends ObjectType
 
                             return $projects->all();
                         }
-                    ],
-                    'response' => [
-                        'type' => TypeRegistry::response(),
-                        'description' => 'Return response of request to project URL',
-                        'resolve' => function ($root, $args) {
-                            return [
-                                //поля ответа
-                            ];
-                        }
-                    ],
+                    ]
                 ];
             }
         ];

@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Schema\Types;
+namespace App\Schema\Types\Requests;
 
 use App\Components\Models\{
     Project,
-    Response,
     User
 };
 use App\Schema\TypeRegistry;
@@ -83,27 +82,6 @@ class Mutation extends ObjectType
                             $project->sync();
 
                             return $project;
-                        }
-                    ],
-                    'response' => [
-                        'type' => TypeRegistry::response(),
-                        'description' => 'Sync Response',
-                        'args' => [
-                            'code' => [
-                                'type' => Type::nonNull(Type::int()),
-                                'description' => 'HTTP code'
-                            ],
-                            'time' => [
-                                'type' => Type::nonNull(Type::float()),
-                                'description' => 'Time in seconds'
-                            ],
-                            'size' => [
-                                'type' => Type::nonNull(Type::int()),
-                                'description' => 'Size in bytes'
-                            ]
-                        ],
-                        'resolve' => function ($root, $args) {
-                            //добавляем/обновляем ответ
                         }
                     ]
                 ];

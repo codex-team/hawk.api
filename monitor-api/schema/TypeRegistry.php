@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace App\Schema;
 
 use App\Schema\Types\{
-    Mutation,
     Project,
-    Query,
-    Response,
     User
+};
+
+use App\Schema\Types\Requests\{
+    Query,
+    Mutation
 };
 
 /**
@@ -26,7 +28,6 @@ class TypeRegistry
     private static $mutation;
     private static $user;
     private static $project;
-    private static $response;
 
     /**
      * @return Query
