@@ -40,7 +40,7 @@ class Archive extends BaseModel
     /**
      * Archive's count of archived errors
      *
-     * @var integer|null
+     * @var int|null
      */
     public $archived;
 
