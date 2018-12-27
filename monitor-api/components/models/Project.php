@@ -98,7 +98,7 @@ class Project extends BaseModel
      */
     public function sync(): void
     {
-        $mongoResult = $this->baseSync($this->_id, $this->rawArgs);
+        $mongoResult = $this->baseSync($this->rawArgs);
 
         $this->fillModel($mongoResult);
     }
