@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Schema\Types;
 
-use App\Schema\TypeRegistry;
 use GraphQL\Type\Definition\{
     ObjectType,
     Type
@@ -58,15 +57,15 @@ class Project extends ObjectType
                         'type' => Type::string(),
                         'description' => 'Project creation date'
                     ],
-                    'teams' => [
-                        'type' => Type::listOf(),
-                        'description' => 'Project\'s teams',
-                        'resolve' => function ($root, $args) {
-                            return [
-                                //команды проекта
-                            ];
-                        }
-                    ],
+//                    'teams' => [
+//                        'type' => Type::listOf(),
+//                        'description' => 'Project\'s teams',
+//                        'resolve' => function ($root, $args) {
+//                            return [
+//                                //команды проекта
+//                            ];
+//                        }
+//                    ],
                 ];
             }
         ];
