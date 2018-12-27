@@ -30,13 +30,9 @@ class Mutation extends ObjectType
                         'type' => TypeRegistry::user(),
                         'description' => 'Sync User',
                         'args' => [
-                            'id' => [
+                            '_id' => [
                                 'type' => Type::id(),
                                 'description' => 'Unique identifier'
-                            ],
-                            'name' => [
-                                'type' => Type::nonNull(Type::string()),
-                                'description' => 'Login'
                             ],
                             'email' => [
                                 'type' => Type::nonNull(Type::string()),
@@ -59,7 +55,7 @@ class Mutation extends ObjectType
                         'type' => TypeRegistry::project(),
                         'description' => 'Sync Project',
                         'args' => [
-                            'id' => [
+                            '_id' => [
                                 'type' => Type::id(),
                                 'description' => 'Unique identifier'
                             ],
