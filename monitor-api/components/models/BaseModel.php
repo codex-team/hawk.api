@@ -46,32 +46,61 @@ abstract class BaseModel
      *
      * @return array|null|object
      */
-    protected function baseSync(?string $_id, array $args)
+    protected function baseSync(array $args)
     {
-        $mongoResult = [];
-        $collection = $this->assocCollection();
+        if ($args['_id'] != null) {
+            $mongoResult = $this->update($args);
+        } else {
+            $mongoResult['_id'] = $this->save($args);
+        }
+
+        return $mongoResult;
+    }
+
+    /**
+     * Save record at assoc collection
+     *
+     * @param array $args
+     *
+     * @return object
+     */
+    private function save(array $args): object
+    {
+        unset($args['_id']);
+
+        return $this->assocCollection()->insertOne($args)->getInsertedId();
+    }
+
+    /**
+     * Update record by given _id
+     *
+     * @param array $args
+     *
+     * @throws ModelException
+     *
+     * @return array
+     */
+    private function update(array $args): array
+    {
+        $idOfUpdatedRecord = $args['_id'];
 
         unset($args['_id']);
 
-        if ($_id) {
-            $query['_id'] = new ObjectId($_id);
+        $query['_id'] = new ObjectId($idOfUpdatedRecord);
 
-            $options = [
-                'upsert' => true,
-                'returnDocument' => \MongoDB\Operation\FindOneAndUpdate::RETURN_DOCUMENT_AFTER
-            ];
+        $update = [
+            '$set' => $args
+        ];
 
-            $update = [
-                '$set' => $args
-            ];
+        $options = [
+            'upsert' => true,
+            'returnDocument' => \MongoDB\Operation\FindOneAndUpdate::RETURN_DOCUMENT_AFTER
+        ];
 
-            $mongoResult = $collection->findOneAndUpdate($query, $update, $options);
+        $mongoResult = $this->assocCollection()->findOneAndUpdate($query, $update, $options);
 
-            if ($mongoResult === null) {
-                throw new ModelException("Record with _id = $_id not found in {$this->collectionName()}");
-            }
-        } else {
-            $mongoResult['_id'] = $collection->insertOne($args)->getInsertedId();
+        if ($mongoResult === null) {
+            throw new ModelException("Record with _id = $idOfUpdatedRecord not found in {$this->collectionName()}");
         }
 
         return $mongoResult;
@@ -102,11 +131,11 @@ abstract class BaseModel
      *
      * @param string $id
      */
-    public function findOne(string $id): void
+    public function findOne(string $_id): void
     {
         $collection = $this->assocCollection();
 
-        $mongoResult = $collection->findOne(['_id' => new ObjectId($id)]);
+        $mongoResult = $collection->findOne(['_id' => new ObjectId($_id)]);
 
         $this->fillModel($mongoResult);
     }
