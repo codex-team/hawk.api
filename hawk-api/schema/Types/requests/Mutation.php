@@ -59,17 +59,33 @@ class Mutation extends ObjectType
                                 'type' => Type::id(),
                                 'description' => 'Unique identifier'
                             ],
-                            'name' => [
+                            'token' => [
                                 'type' => Type::string(),
-                                'description' => 'Alias name'
+                                'description' => 'Public token'
                             ],
-                            'url' => [
+                            'name' => [
                                 'type' => Type::nonNull(Type::string()),
-                                'description' => 'URL address'
+                                'description' => 'Name'
                             ],
-                            'webhooks' => [
-                                'type' => Type::listOf(Type::string()),
-                                'description' => 'Webhook URL'
+                            'description' => [
+                                'type' => Type::string(),
+                                'description' => 'Description'
+                            ],
+                            'domain' => [
+                                'type' => Type::string(),
+                                'description' => 'Domain'
+                            ],
+                            'uri' => [
+                                'type' => Type::string(),
+                                'description' => 'URI'
+                            ],
+                            'logo' => [
+                                'type' => Type::string(),
+                                'description' => 'Logo URL'
+                            ],
+                            'id_added' => [
+                                'type' => Type::string(),
+                                'description' => 'Owner\'s unique identifier'
                             ],
                         ],
                         'resolve' => function ($root, $args) {

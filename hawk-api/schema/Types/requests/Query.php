@@ -30,7 +30,7 @@ class Query extends ObjectType
                         'type' => TypeRegistry::user(),
                         'description' => 'Return User by _id',
                         'args' => [
-                            'id' => Type::nonNull(Type::id()),
+                            '_id' => Type::nonNull(Type::id()),
                         ],
                         'resolve' => function ($root, $args) {
                             $user = new User();
@@ -42,11 +42,16 @@ class Query extends ObjectType
                     ],
                     'project' => [
                         'type' => TypeRegistry::project(),
-                        'description' => 'Return projects',
+                        'description' => 'Return Project by _id',
+                        'args' => [
+                            '_id' => Type::nonNull(Type::id()),
+                        ],
                         'resolve' => function ($root, $args) {
-                            return [
-                                //поля проекта
-                            ];
+                            $user = new User();
+
+                            $user->findOne($args['_id']);
+
+                            return $user;
                         }
                     ],
                     'projects' => [
