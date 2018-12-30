@@ -28,11 +28,11 @@ class User extends ObjectType
                     ],
                     'email' => [
                         'type' => Type::string(),
-                        'description' => 'User\'s email'
+                        'description' => 'Email address'
                     ],
                     'password' => [
                         'type' => Type::string(),
-                        'description' => 'User\'s password'
+                        'description' => 'Password'
                     ],
                     'projects' => [
                         'type' => Type::listOf(TypeRegistry::project()),

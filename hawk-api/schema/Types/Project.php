@@ -22,40 +22,40 @@ class Project extends ObjectType
             'fields' => function () {
                 return [
                     '_id' => [
+                        'type' => Type::id(),
+                        'description' => 'Unique identifier'
+                    ],
+                    'token' => [
                         'type' => Type::string(),
-                        'description' => 'Project\'s unique identifier'
+                        'description' => 'Public token'
+                    ],
+                    'name' => [
+                        'type' => Type::string(),
+                        'description' => 'Name'
+                    ],
+                    'description' => [
+                        'type' => Type::string(),
+                        'description' => 'Description'
+                    ],
+                    'domain' => [
+                        'type' => Type::string(),
+                        'description' => 'Domain'
+                    ],
+                    'uri' => [
+                        'type' => Type::string(),
+                        'description' => 'URI'
+                    ],
+                    'logo' => [
+                        'type' => Type::string(),
+                        'description' => 'Logo URL'
                     ],
                     'id_added' => [
                         'type' => Type::string(),
                         'description' => 'Owner\'s unique identifier'
                     ],
-                    'token' => [
-                        'type' => Type::string(),
-                        'description' => 'Project public token'
-                    ],
-                    'name' => [
-                        'type' => Type::string(),
-                        'description' => 'Project name'
-                    ],
-                    'description' => [
-                        'type' => Type::string(),
-                        'description' => 'Project description'
-                    ],
-                    'domain' => [
-                        'type' => Type::string(),
-                        'description' => 'Project domain'
-                    ],
-                    'uri' => [
-                        'type' => Type::string(),
-                        'description' => 'Project URI'
-                    ],
-                    'logo' => [
-                        'type' => Type::string(),
-                        'description' => 'Project logo URL'
-                    ],
                     'dt_added' => [
                         'type' => Type::string(),
-                        'description' => 'Project creation date'
+                        'description' => 'Creation date'
                     ],
 //                    'teams' => [
 //                        'type' => Type::listOf(),
