@@ -12,6 +12,13 @@ use MongoDB\Collection;
 abstract class BaseModel
 {
     /**
+     * Raw arguments for updating/inserting
+     *
+     * @var array
+     */
+    public $rawArgs;
+
+    /**
      * Model's constructor
      *
      * @param array $args

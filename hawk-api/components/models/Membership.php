@@ -24,7 +24,7 @@ class Membership extends BaseModel
     public $project_id;
 
     /**
-     * Project's uri where user take part
+     * Project's URI where user take part
      *
      * @var string|null
      */
@@ -50,13 +50,6 @@ class Membership extends BaseModel
      * @var string|null
      */
     public $slackHook;
-
-    /**
-     * Raw arguments for updating/inserting.
-     *
-     * @var array
-     */
-    public $rawArgs;
 
     /**
      * User constructor.

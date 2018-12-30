@@ -38,13 +38,6 @@ class Team extends BaseModel
     public $is_pending;
 
     /**
-     * Raw arguments for updating/inserting.
-     *
-     * @var array
-     */
-    public $rawArgs;
-
-    /**
      * User constructor.
      *
      * @param array $args

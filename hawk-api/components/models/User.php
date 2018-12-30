@@ -16,25 +16,18 @@ class User extends BaseModel
     public $_id;
 
     /**
-     * User's email address
+     * Email address
      *
      * @var string|null
      */
     public $email;
 
     /**
-     * User's password
+     * Password
      *
      * @var string|null
      */
     public $password;
-
-    /**
-     * Raw arguments for updating/inserting.
-     *
-     * @var array
-     */
-    public $rawArgs;
 
     /**
      * User constructor.
