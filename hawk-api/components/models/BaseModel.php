@@ -111,11 +111,11 @@ abstract class BaseModel
      *
      * @return array
      */
-    public function all(): array
+    public function all(array $conditions = []): array
     {
         $collection = $this->assocCollection();
 
-        $cursor = $collection->find();
+        $cursor = $collection->find($conditions);
 
         $result = [];
 
@@ -127,23 +127,49 @@ abstract class BaseModel
     }
 
     /**
-     * Find model by _id
+     * Mongo findOne wrapper
+     *
+     * @param array $filter
+     *
+     * @throws ModelException
+     *
+     * @return array
+     */
+    protected function findOne(array $filter): array
+    {
+        $collection = $this->assocCollection();
+
+        $mongoResult = $collection->findOne($filter);
+
+        if ($mongoResult === null) {
+            throw new ModelException("Record with not found in {$this->collectionName()}");
+        }
+
+        return $mongoResult;
+    }
+
+    /**
+     * Find and fill model by _id
      *
      * @param string $id
      *
      * @throws ModelException
      */
-    public function findOne(string $_id): void
+    public function findById(string $_id): void
     {
-        $collection = $this->assocCollection();
+        $this->fillModel($this->findOne(['_id' => new ObjectId($_id)]));
+    }
 
-        $mongoResult = $collection->findOne(['_id' => new ObjectId($_id)]);
-
-        if ($mongoResult === null) {
-            throw new ModelException("Record with _id = $_id not found in {$this->collectionName()}");
-        }
-
-        $this->fillModel($mongoResult);
+    /**
+     * Find and fill model by custom condition
+     *
+     * @param array $conditions
+     *
+     * @throws ModelException
+     */
+    public function findByConditions(array $conditions = [])
+    {
+        $this->fillModel($this->findOne($conditions));
     }
 
     /**

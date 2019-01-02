@@ -35,7 +35,7 @@ class Query extends ObjectType
                         'resolve' => function ($root, $args) {
                             $user = new User();
 
-                            $user->findOne($args['_id']);
+                            $user->findById($args['_id']);
 
                             return $user;
                         }
@@ -49,7 +49,7 @@ class Query extends ObjectType
                         'resolve' => function ($root, $args) {
                             $user = new User();
 
-                            $user->findOne($args['_id']);
+                            $user->findById($args['_id']);
 
                             return $user;
                         }
