@@ -79,7 +79,6 @@ class Project extends BaseModel
     public function __construct(array $args = [])
     {
         if (!empty($args)) {
-            $this->rawArgs = $args;
             $this->fillModel($args);
         }
     }

@@ -59,21 +59,20 @@ class Archive extends BaseModel
     public function __construct(array $args = [])
     {
         if (!empty($args)) {
-            $this->rawArgs = $args;
             $this->fillModel($args);
         }
     }
 
     /**
-     * Create or Update user
+     * Create or Update archive
+     *
+     * @param $args array
      *
      * @throws \Exception
      */
-    public function sync(): void
+    public function sync(array $args): void
     {
-        $mongoResult = $this->baseSync($this->rawArgs);
-
-        $this->fillModel($mongoResult);
+        $this->fillModel($this->baseSync($args));
     }
 
     /**
