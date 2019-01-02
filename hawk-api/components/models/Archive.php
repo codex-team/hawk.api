@@ -24,32 +24,18 @@ class Archive extends BaseModel
     public $project_id;
 
     /**
-     * User's role
-     *
-     * @var string|null
-     */
-    public $role;
-
-    /**
-     * Archive's tag
+     * Tag
      *
      * @var string
      */
     public $tag;
 
     /**
-     * Archive's count of archived errors
+     * Count of archived errors
      *
      * @var int|null
      */
     public $archived;
-
-    /**
-     * Raw arguments for updating/inserting.
-     *
-     * @var array
-     */
-    public $rawArgs;
 
     /**
      * User constructor.

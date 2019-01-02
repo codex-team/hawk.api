@@ -24,7 +24,7 @@ class Team extends BaseModel
     public $user_id;
 
     /**
-     * User's role
+     * Role type
      *
      * @var string|null
      */
