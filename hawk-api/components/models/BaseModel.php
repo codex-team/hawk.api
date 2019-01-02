@@ -12,13 +12,6 @@ use MongoDB\Collection;
 abstract class BaseModel
 {
     /**
-     * Raw arguments for updating/inserting
-     *
-     * @var array
-     */
-    public $rawArgs;
-
-    /**
      * Model's constructor
      *
      * @param array $args
@@ -27,7 +20,7 @@ abstract class BaseModel
 
     abstract public function collectionName(): string;
 
-    abstract public function sync(): void;
+    abstract public function sync(array $args): void;
 
     /**
      * Fill the model fields
@@ -58,7 +51,7 @@ abstract class BaseModel
         if ($args['_id'] != null) {
             $mongoResult = $this->update($args);
         } else {
-            $mongoResult['_id'] = $this->save($args);
+            $mongoResult = $this->save($args);
         }
 
         return $mongoResult;
@@ -69,13 +62,13 @@ abstract class BaseModel
      *
      * @param array $args
      *
-     * @return object
+     * @return array
      */
-    private function save(array $args): object
+    private function save(array $args): array
     {
-        unset($args['_id']);
+        $args['_id'] = $this->assocCollection()->insertOne($args)->getInsertedId();
 
-        return $this->assocCollection()->insertOne($args)->getInsertedId();
+        return $args;
     }
 
     /**
@@ -137,12 +130,18 @@ abstract class BaseModel
      * Find model by _id
      *
      * @param string $id
+     *
+     * @throws ModelException
      */
     public function findOne(string $_id): void
     {
         $collection = $this->assocCollection();
 
         $mongoResult = $collection->findOne(['_id' => new ObjectId($_id)]);
+
+        if ($mongoResult === null) {
+            throw new ModelException("Record with _id = $_id not found in {$this->collectionName()}");
+        }
 
         $this->fillModel($mongoResult);
     }

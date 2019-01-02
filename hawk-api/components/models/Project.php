@@ -87,13 +87,13 @@ class Project extends BaseModel
     /**
      * Create or Update project
      *
+     * @param $args array
+     *
      * @throws \Exception
      */
-    public function sync(): void
+    public function sync(array $args): void
     {
-        $mongoResult = $this->baseSync($this->rawArgs);
-
-        $this->fillModel($mongoResult);
+        $this->fillModel($this->baseSync($args));
     }
 
     /**

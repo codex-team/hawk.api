@@ -44,9 +44,9 @@ class Mutation extends ObjectType
                             ],
                         ],
                         'resolve' => function ($root, $args) {
-                            $user = new User($args);
+                            $user = new User();
 
-                            $user->sync();
+                            $user->sync($args);
 
                             return $user;
                         }
@@ -89,9 +89,9 @@ class Mutation extends ObjectType
                             ],
                         ],
                         'resolve' => function ($root, $args) {
-                            $project = new Project($args);
+                            $project = new Project();
 
-                            $project->sync();
+                            $project->sync($args);
 
                             return $project;
                         }
