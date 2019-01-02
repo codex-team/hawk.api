@@ -9,10 +9,7 @@ use App\Schema\Types\Requests\{
     Query
 };
 
-use App\Schema\Types\{
-    Project,
-    User
-};
+use App\Schema\Types\{Archive, Membership, Project, Team, User};
 
 /**
  * Class TypeRegistry
@@ -28,6 +25,9 @@ class TypeRegistry
     private static $mutation;
     private static $user;
     private static $project;
+    private static $archive;
+    private static $membership;
+    private static $team;
 
     /**
      * @return Query
@@ -59,5 +59,29 @@ class TypeRegistry
     public static function project(): Project
     {
         return self::$project ?: (self::$project = new Project());
+    }
+
+    /**
+     * @return Archive
+     */
+    public static function archive(): Archive
+    {
+        return self::$archive ?: (self::$archive = new Archive());
+    }
+
+    /**
+     * @return Membership
+     */
+    public static function membership(): Membership
+    {
+        return self::$membership ?: (self::$membership = new Membership());
+    }
+
+    /**
+     * @return Team
+     */
+    public static function team(): Team
+    {
+        return self::$team ?: (self::$team = new Team());
     }
 }

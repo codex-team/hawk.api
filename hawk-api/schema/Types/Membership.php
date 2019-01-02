@@ -1,0 +1,54 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Schema\Types;
+
+use GraphQL\Type\Definition\{
+    ObjectType,
+    Type
+};
+
+/**
+ * Class Project
+ *
+ * @package App\Schema\Types
+ */
+class Membership extends ObjectType
+{
+    public function __construct()
+    {
+        $config = [
+            'fields' => function () {
+                return [
+                    '_id' => [
+                        'type' => Type::id(),
+                        'description' => 'Unique identifier'
+                    ],
+                    'project_id' => [
+                        'type' => Type::string(),
+                        'description' => 'Project\'s id where user take part'
+                    ],
+                    'project_uri' => [
+                        'type' => Type::string(),
+                        'description' => 'Project\'s URI where user take part'
+                    ],
+                    'notifies' => [
+                        'type' => Type::listOf(Type::boolean()),
+                        'description' => 'Contains notifications mode'
+                    ],
+                    'tgHook' => [
+                        'type' => Type::string(),
+                        'description' => 'Telegram\'s hook to notify'
+                    ],
+                    'slackHook' => [
+                        'type' => Type::string(),
+                        'description' => 'Slack\'s hook to notify'
+                    ],
+                ];
+            }
+        ];
+
+        parent::__construct($config);
+    }
+}
