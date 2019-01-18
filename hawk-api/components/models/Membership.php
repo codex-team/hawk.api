@@ -33,7 +33,7 @@ class Membership extends BaseModel
     /**
      * Contains notifications mode
      *
-     * @var array
+     * @var array|null
      */
     public $notifies;
 

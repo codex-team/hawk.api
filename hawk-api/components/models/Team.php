@@ -33,7 +33,7 @@ class Team extends BaseModel
     /**
      * Pending status
      *
-     * @var array
+     * @var bool|null
      */
     public $is_pending;
 

@@ -6,8 +6,7 @@ namespace App\Components\Models;
 
 class Archive extends BaseModel
 {
-    // TODO: разобраться с "collection:<project._id>"
-    protected const COLLECTION_NAME = '';
+    protected const COLLECTION_NAME = 'archive';
 
     /**
      * Membership's unique identifier
@@ -26,7 +25,7 @@ class Archive extends BaseModel
     /**
      * Tag
      *
-     * @var string
+     * @var string|null
      */
     public $tag;
 
