@@ -42,14 +42,14 @@ class Membership extends BaseModel
      *
      * @var string|null
      */
-    public $tgHook;
+    public $tg_hook;
 
     /**
      * Slack's hook to notify
      *
      * @var string|null
      */
-    public $slackHook;
+    public $slack_hook;
 
     /**
      * User constructor.
