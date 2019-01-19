@@ -19,7 +19,7 @@ abstract class BaseModel
     /**
      * Model's constructor
      *
-     * @param array $args
+     * @param array $args Values as assoc array to fill model
      */
     abstract public function __construct(array $args = []);
 
@@ -33,14 +33,14 @@ abstract class BaseModel
     /**
      * Sync model with record at database
      *
-     * @param array $args
+     * @param array $args Values as assoc array to synchronise
      */
     abstract public function sync(array $args): void;
 
     /**
      * Fill the model fields
      *
-     * @param array $data
+     * @param array $data Assoc array with keys, that equals to model properties
      */
     protected function fillModel(array $data): void
     {
@@ -147,7 +147,7 @@ abstract class BaseModel
      *
      * @return array
      */
-    protected function findOne(array $filter): array
+    public function findOne(array $filter = []): array
     {
         $mongoResult = $this->assocCollection()->findOne($filter);
 
@@ -161,21 +161,11 @@ abstract class BaseModel
     /**
      * Find and fill model by _id
      *
-     * @param string $id
+     * @param string $_id Identifier of searching record
      */
     public function findById(string $_id): void
     {
         $this->fillModel($this->findOne(['_id' => new ObjectId($_id)]));
-    }
-
-    /**
-     * Find and fill model by custom condition
-     *
-     * @param array $conditions
-     */
-    public function findByConditions(array $conditions = []): void
-    {
-        $this->fillModel($this->findOne($conditions));
     }
 
     /**

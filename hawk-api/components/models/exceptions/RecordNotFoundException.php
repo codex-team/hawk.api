@@ -14,9 +14,9 @@ class RecordNotFoundException extends \Exception
     /**
      * ModelException constructor.
      *
-     * @param string $collectionName
-     * @param string $message
-     * @param int $code
+     * @param string          $collectionName
+     * @param string          $message
+     * @param int             $code
      * @param \Exception|null $previous
      */
     public function __construct(string $collectionName, $message = 'Record not found.', $code = 0, \Exception $previous = null)
