@@ -34,15 +34,15 @@ class User extends ObjectType
                         'type' => Type::string(),
                         'description' => 'Password'
                     ],
-                    'projects' => [
-                        'type' => Type::listOf(TypeRegistry::project()),
-                        'description' => 'User\'s projects',
-                        'resolve' => function ($root, $args) {
-                            return [
-                                //проекты пользователей
-                            ];
-                        }
-                    ]
+//                    'projects' => [
+//                        'type' => Type::listOf(TypeRegistry::project()),
+//                        'description' => 'User\'s projects',
+//                        'resolve' => function ($root, $args) {
+//                            return [
+//                                //проекты пользователей
+//                            ];
+//                        }
+//                    ]
                 ];
             }
         ];

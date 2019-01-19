@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Components\Models;
 
 use App\Components\Base\Mongo;
-use App\Components\Models\Exceptions\ModelException;
+use App\Components\Models\Exceptions\RecordNotFoundException;
 use MongoDB\BSON\ObjectId;
 use MongoDB\Collection;
 
@@ -42,11 +42,9 @@ abstract class BaseModel
      * @param null|string $_id
      * @param array       $args
      *
-     * @throws \Exception
-     *
-     * @return array|null|object
+     * @return array
      */
-    protected function baseSync(array $args)
+    protected function baseSync(array $args): array
     {
         if ($args['_id'] != null) {
             $mongoResult = $this->update($args);
@@ -76,7 +74,7 @@ abstract class BaseModel
      *
      * @param array $args
      *
-     * @throws ModelException
+     * @throws RecordNotFoundException
      *
      * @return array
      */
@@ -100,7 +98,7 @@ abstract class BaseModel
         $mongoResult = $this->assocCollection()->findOneAndUpdate($query, $update, $options);
 
         if ($mongoResult === null) {
-            throw new ModelException("Record with _id = $idOfUpdatedRecord not found in {$this->collectionName()}");
+            throw new RecordNotFoundException($this->collectionName());
         }
 
         return $mongoResult;
@@ -131,7 +129,7 @@ abstract class BaseModel
      *
      * @param array $filter
      *
-     * @throws ModelException
+     * @throws RecordNotFoundException
      *
      * @return array
      */
@@ -142,7 +140,7 @@ abstract class BaseModel
         $mongoResult = $collection->findOne($filter);
 
         if ($mongoResult === null) {
-            throw new ModelException("Record with not found in {$this->collectionName()}");
+            throw new RecordNotFoundException($this->collectionName());
         }
 
         return $mongoResult;
@@ -152,8 +150,6 @@ abstract class BaseModel
      * Find and fill model by _id
      *
      * @param string $id
-     *
-     * @throws ModelException
      */
     public function findById(string $_id): void
     {
@@ -164,8 +160,6 @@ abstract class BaseModel
      * Find and fill model by custom condition
      *
      * @param array $conditions
-     *
-     * @throws ModelException
      */
     public function findByConditions(array $conditions = [])
     {
