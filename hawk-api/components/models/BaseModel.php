@@ -9,6 +9,11 @@ use App\Components\Models\Exceptions\RecordNotFoundException;
 use MongoDB\BSON\ObjectId;
 use MongoDB\Collection;
 
+/**
+ * Class BaseModel
+ *
+ * @package App\Components\Models
+ */
 abstract class BaseModel
 {
     /**
@@ -18,8 +23,18 @@ abstract class BaseModel
      */
     abstract public function __construct(array $args = []);
 
+    /**
+     * Return associated collection name
+     *
+     * @return string
+     */
     abstract public function collectionName(): string;
 
+    /**
+     * Sync model with record at database
+     *
+     * @param array $args
+     */
     abstract public function sync(array $args): void;
 
     /**
@@ -39,8 +54,7 @@ abstract class BaseModel
     /**
      * Insert or Update model record in collection
      *
-     * @param null|string $_id
-     * @param array       $args
+     * @param array $args Values as assoc array to synchronise
      *
      * @return array
      */
@@ -58,7 +72,7 @@ abstract class BaseModel
     /**
      * Save record at assoc collection
      *
-     * @param array $args
+     * @param array $args Values to save
      *
      * @return array
      */
@@ -72,7 +86,7 @@ abstract class BaseModel
     /**
      * Update record by given _id
      *
-     * @param array $args
+     * @param array $args Values to update
      *
      * @throws RecordNotFoundException
      *
@@ -105,15 +119,15 @@ abstract class BaseModel
     }
 
     /**
-     * Return all records from collection
+     * Return all records from collection (by filter)
+     *
+     * @param array $filter Filter to find records
      *
      * @return array
      */
-    public function all(array $conditions = []): array
+    public function all(array $filter = []): array
     {
-        $collection = $this->assocCollection();
-
-        $cursor = $collection->find($conditions);
+        $cursor = $this->assocCollection()->find($filter);
 
         $result = [];
 
@@ -127,7 +141,7 @@ abstract class BaseModel
     /**
      * Mongo findOne wrapper
      *
-     * @param array $filter
+     * @param array $filter Filter to find record
      *
      * @throws RecordNotFoundException
      *
@@ -135,9 +149,7 @@ abstract class BaseModel
      */
     protected function findOne(array $filter): array
     {
-        $collection = $this->assocCollection();
-
-        $mongoResult = $collection->findOne($filter);
+        $mongoResult = $this->assocCollection()->findOne($filter);
 
         if ($mongoResult === null) {
             throw new RecordNotFoundException($this->collectionName());
@@ -161,7 +173,7 @@ abstract class BaseModel
      *
      * @param array $conditions
      */
-    public function findByConditions(array $conditions = [])
+    public function findByConditions(array $conditions = []): void
     {
         $this->fillModel($this->findOne($conditions));
     }
