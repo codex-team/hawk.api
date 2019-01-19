@@ -44,7 +44,7 @@ class Project extends BaseModel
     public $domain;
 
     /**
-     * URO
+     * Project's website
      *
      * @var string|null
      */
