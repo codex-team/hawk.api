@@ -49,11 +49,11 @@ class Project extends ObjectType
                         'type' => Type::string(),
                         'description' => 'Logo URL'
                     ],
-                    'id_added' => [
+                    'uidAdded' => [
                         'type' => Type::string(),
                         'description' => 'Owner\'s unique identifier'
                     ],
-                    'dt_added' => [
+                    'dtAdded' => [
                         'type' => Type::string(),
                         'description' => 'Creation date'
                     ],

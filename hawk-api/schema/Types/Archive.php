@@ -25,7 +25,7 @@ class Archive extends ObjectType
                         'type' => Type::id(),
                         'description' => 'Unique identifier'
                     ],
-                    'project_id' => [
+                    'projectId' => [
                         'type' => Type::string(),
                         'description' => 'Project\'s _id archive related to'
                     ],

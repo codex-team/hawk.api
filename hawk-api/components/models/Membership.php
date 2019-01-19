@@ -21,14 +21,14 @@ class Membership extends BaseModel
      *
      * @var string|null
      */
-    public $project_id;
+    public $projectId;
 
     /**
      * Project's URI where user take part
      *
      * @var string|null
      */
-    public $project_uri;
+    public $projectUri;
 
     /**
      * Contains notifications mode
@@ -42,14 +42,14 @@ class Membership extends BaseModel
      *
      * @var string|null
      */
-    public $tg_hook;
+    public $tgHook;
 
     /**
      * Slack's hook to notify
      *
      * @var string|null
      */
-    public $slack_hook;
+    public $slackHook;
 
     /**
      * User constructor.

@@ -62,14 +62,14 @@ class Project extends BaseModel
      *
      * @var string|null
      */
-    public $uid_added;
+    public $uidAdded;
 
     /**
      * Added date
      *
      * @var string|null
      */
-    public $dt_added;
+    public $dtAdded;
 
     /**
      * User constructor

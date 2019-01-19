@@ -25,11 +25,11 @@ class Membership extends ObjectType
                         'type' => Type::id(),
                         'description' => 'Unique identifier'
                     ],
-                    'project_id' => [
+                    'projectId' => [
                         'type' => Type::string(),
                         'description' => 'Project\'s id where user take part'
                     ],
-                    'project_uri' => [
+                    'projectUri' => [
                         'type' => Type::string(),
                         'description' => 'Project\'s URI where user take part'
                     ],

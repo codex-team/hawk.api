@@ -25,7 +25,7 @@ class Team extends ObjectType
                         'type' => Type::id(),
                         'description' => 'Unique identifier'
                     ],
-                    'user_id' => [
+                    'userId' => [
                         'type' => Type::string(),
                         'description' => 'User\'s id which take part'
                     ],
@@ -33,7 +33,7 @@ class Team extends ObjectType
                         'type' => Type::string(),
                         'description' => 'Role type'
                     ],
-                    'is_pending' => [
+                    'isPending' => [
                         'type' => Type::string(),
                         'description' => 'Pending status'
                     ]

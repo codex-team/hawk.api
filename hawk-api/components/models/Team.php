@@ -21,7 +21,7 @@ class Team extends BaseModel
      *
      * @var string|null
      */
-    public $user_id;
+    public $userId;
 
     /**
      * Role type
@@ -35,7 +35,7 @@ class Team extends BaseModel
      *
      * @var bool|null
      */
-    public $is_pending;
+    public $isPending;
 
     /**
      * User constructor.

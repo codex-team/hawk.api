@@ -20,7 +20,7 @@ class Archive extends BaseModel
      *
      * @var string|null
      */
-    public $project_id;
+    public $projectId;
 
     /**
      * Tag
