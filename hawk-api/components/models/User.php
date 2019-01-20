@@ -30,18 +30,6 @@ class User extends BaseModel
     public $password;
 
     /**
-     * User constructor.
-     *
-     * @param array $args
-     */
-    public function __construct(array $args = [])
-    {
-        if (!empty($args)) {
-            $this->fillModel($args);
-        }
-    }
-
-    /**
      * Return collection name
      *
      * @return string

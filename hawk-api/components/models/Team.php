@@ -38,18 +38,6 @@ class Team extends BaseModel
     public $isPending;
 
     /**
-     * User constructor.
-     *
-     * @param array $args
-     */
-    public function __construct(array $args = [])
-    {
-        if (!empty($args)) {
-            $this->fillModel($args);
-        }
-    }
-
-    /**
      * Return collection name
      *
      * @return string

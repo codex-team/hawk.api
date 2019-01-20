@@ -17,18 +17,23 @@ use MongoDB\Collection;
 abstract class BaseModel
 {
     /**
-     * Model's constructor
-     *
-     * @param array $args Values as assoc array to fill model
-     */
-    abstract public function __construct(array $args = []);
-
-    /**
      * Return associated collection name
      *
      * @return string
      */
     abstract public function collectionName(): string;
+
+    /**
+     * Base Model's constructor
+     *
+     * @param array $args Values as assoc array to fill model
+     */
+    public function __construct(array $args = [])
+    {
+        if (!empty($args)) {
+            $this->fillModel($args);
+        }
+    }
 
     /**
      * Fill the model fields

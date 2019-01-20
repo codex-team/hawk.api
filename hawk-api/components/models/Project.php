@@ -72,18 +72,6 @@ class Project extends BaseModel
     public $dtAdded;
 
     /**
-     * User constructor
-     *
-     * @param array $args
-     */
-    public function __construct(array $args = [])
-    {
-        if (!empty($args)) {
-            $this->fillModel($args);
-        }
-    }
-
-    /**
      * @return string
      */
     public function collectionName(): string
