@@ -148,6 +148,16 @@ abstract class BaseModel
     }
 
     /**
+     * Find and fill model by _id
+     *
+     * @param string $_id Identifier of searching record
+     */
+    public function findById(string $_id): void
+    {
+        $this->fillModel($this->findOneWrapper(['_id' => new ObjectId($_id)]));
+    }
+
+    /**
      * Mongo findOne wrapper
      *
      * @param array $filter Filter to find record
@@ -156,7 +166,7 @@ abstract class BaseModel
      *
      * @return array
      */
-    public function findOne(array $filter = []): array
+    protected function findOneWrapper(array $filter = []): array
     {
         $mongoResult = $this->assocCollection()->findOne($filter);
 
@@ -165,16 +175,6 @@ abstract class BaseModel
         }
 
         return $mongoResult;
-    }
-
-    /**
-     * Find and fill model by _id
-     *
-     * @param string $_id Identifier of searching record
-     */
-    public function findById(string $_id): void
-    {
-        $this->fillModel($this->findOne(['_id' => new ObjectId($_id)]));
     }
 
     /**
