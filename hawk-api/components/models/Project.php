@@ -84,18 +84,6 @@ class Project extends BaseModel
     }
 
     /**
-     * Create or Update project
-     *
-     * @param $args array
-     *
-     * @throws \Exception
-     */
-    public function sync(array $args): void
-    {
-        $this->fillModel($this->baseSync($args));
-    }
-
-    /**
      * @return string
      */
     public function collectionName(): string

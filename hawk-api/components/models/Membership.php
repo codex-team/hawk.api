@@ -64,18 +64,6 @@ class Membership extends BaseModel
     }
 
     /**
-     * Create or Update membership
-     *
-     * @param $args array
-     *
-     * @throws \Exception
-     */
-    public function sync(array $args): void
-    {
-        $this->fillModel($this->baseSync($args));
-    }
-
-    /**
      * Return collection name
      *
      * @return string

@@ -50,18 +50,6 @@ class Team extends BaseModel
     }
 
     /**
-     * Create or Update team
-     *
-     * @param $args array
-     *
-     * @throws \Exception
-     */
-    public function sync(array $args): void
-    {
-        $this->fillModel($this->baseSync($args));
-    }
-
-    /**
      * Return collection name
      *
      * @return string

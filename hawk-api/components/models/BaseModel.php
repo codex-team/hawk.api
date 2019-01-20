@@ -31,13 +31,6 @@ abstract class BaseModel
     abstract public function collectionName(): string;
 
     /**
-     * Sync model with record at database
-     *
-     * @param array $args Values as assoc array to synchronise
-     */
-    abstract public function sync(array $args): void;
-
-    /**
      * Fill the model fields
      *
      * @param array $data Assoc array with keys, that equals to model properties
@@ -49,6 +42,17 @@ abstract class BaseModel
                 $this->$key = $value;
             }
         }
+    }
+
+    /**
+     * Synchronise model with record at database
+     * Can be redeclared to modify $args before sync
+     *
+     * @param $args array Values as assoc array to synchronise
+     */
+    public function sync(array $args): void
+    {
+        $this->fillModel($this->baseSync($args));
     }
 
     /**
