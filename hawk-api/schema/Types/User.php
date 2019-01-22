@@ -22,31 +22,27 @@ class User extends ObjectType
         $config = [
             'fields' => function () {
                 return [
-                    'id' => [
+                    '_id' => [
                         'type' => Type::id(),
                         'description' => 'User\'s unique identifier'
                     ],
-                    'name' => [
-                        'type' => Type::string(),
-                        'description' => 'User\'s name'
-                    ],
                     'email' => [
                         'type' => Type::string(),
-                        'description' => 'User\'s email'
+                        'description' => 'Email address'
                     ],
                     'password' => [
                         'type' => Type::string(),
-                        'description' => 'User\'s password'
+                        'description' => 'Password'
                     ],
-                    'projects' => [
-                        'type' => Type::listOf(TypeRegistry::project()),
-                        'description' => 'User\'s projects',
-                        'resolve' => function ($root, $args) {
-                            return [
-                                //проекты пользователей
-                            ];
-                        }
-                    ]
+//                    'projects' => [
+//                        'type' => Type::listOf(TypeRegistry::project()),
+//                        'description' => 'User\'s projects',
+//                        'resolve' => function ($root, $args) {
+//                            return [
+//                                //проекты пользователей
+//                            ];
+//                        }
+//                    ]
                 ];
             }
         ];

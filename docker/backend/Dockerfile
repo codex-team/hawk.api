@@ -11,4 +11,4 @@ RUN docker-php-ext-enable mongodb
 RUN curl -sS https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/local/bin/composer
 
-WORKDIR /var/www/monitor-api
+WORKDIR /var/www/hawk-api

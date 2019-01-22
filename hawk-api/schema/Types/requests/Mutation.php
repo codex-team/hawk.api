@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Schema\Types;
+namespace App\Schema\Types\Requests;
 
 use App\Components\Models\{
     Project,
-    Response,
     User
 };
 use App\Schema\TypeRegistry;
@@ -31,13 +30,9 @@ class Mutation extends ObjectType
                         'type' => TypeRegistry::user(),
                         'description' => 'Sync User',
                         'args' => [
-                            'id' => [
+                            '_id' => [
                                 'type' => Type::id(),
                                 'description' => 'Unique identifier'
-                            ],
-                            'name' => [
-                                'type' => Type::nonNull(Type::string()),
-                                'description' => 'Login'
                             ],
                             'email' => [
                                 'type' => Type::nonNull(Type::string()),
@@ -49,9 +44,9 @@ class Mutation extends ObjectType
                             ],
                         ],
                         'resolve' => function ($root, $args) {
-                            $user = new User($args);
+                            $user = new User();
 
-                            $user->sync();
+                            $user->sync($args);
 
                             return $user;
                         }
@@ -60,50 +55,45 @@ class Mutation extends ObjectType
                         'type' => TypeRegistry::project(),
                         'description' => 'Sync Project',
                         'args' => [
-                            'id' => [
+                            '_id' => [
                                 'type' => Type::id(),
                                 'description' => 'Unique identifier'
                             ],
-                            'name' => [
+                            'token' => [
                                 'type' => Type::string(),
-                                'description' => 'Alias name'
+                                'description' => 'Public token'
                             ],
-                            'url' => [
+                            'name' => [
                                 'type' => Type::nonNull(Type::string()),
-                                'description' => 'URL address'
+                                'description' => 'Name'
                             ],
-                            'webhooks' => [
-                                'type' => Type::listOf(Type::string()),
-                                'description' => 'Webhook URL'
+                            'description' => [
+                                'type' => Type::string(),
+                                'description' => 'Description'
+                            ],
+                            'domain' => [
+                                'type' => Type::string(),
+                                'description' => 'Domain'
+                            ],
+                            'uri' => [
+                                'type' => Type::string(),
+                                'description' => 'URI'
+                            ],
+                            'logo' => [
+                                'type' => Type::string(),
+                                'description' => 'Logo URL'
+                            ],
+                            'id_added' => [
+                                'type' => Type::string(),
+                                'description' => 'Owner\'s unique identifier'
                             ],
                         ],
                         'resolve' => function ($root, $args) {
-                            $project = new Project($args);
+                            $project = new Project();
 
-                            $project->sync();
+                            $project->sync($args);
 
                             return $project;
-                        }
-                    ],
-                    'response' => [
-                        'type' => TypeRegistry::response(),
-                        'description' => 'Sync Response',
-                        'args' => [
-                            'code' => [
-                                'type' => Type::nonNull(Type::int()),
-                                'description' => 'HTTP code'
-                            ],
-                            'time' => [
-                                'type' => Type::nonNull(Type::float()),
-                                'description' => 'Time in seconds'
-                            ],
-                            'size' => [
-                                'type' => Type::nonNull(Type::int()),
-                                'description' => 'Size in bytes'
-                            ]
-                        ],
-                        'resolve' => function ($root, $args) {
-                            //добавляем/обновляем ответ
                         }
                     ]
                 ];

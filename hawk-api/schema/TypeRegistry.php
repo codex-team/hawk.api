@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace App\Schema;
 
-use App\Schema\Types\{
+use App\Schema\Types\Requests\{
     Mutation,
-    Project,
-    Query,
-    Response,
-    User
+    Query
 };
+
+use App\Schema\Types\{Archive, Membership, Project, Team, User};
 
 /**
  * Class TypeRegistry
@@ -26,7 +25,9 @@ class TypeRegistry
     private static $mutation;
     private static $user;
     private static $project;
-    private static $response;
+    private static $archive;
+    private static $membership;
+    private static $team;
 
     /**
      * @return Query
@@ -61,10 +62,26 @@ class TypeRegistry
     }
 
     /**
-     * @return Response
+     * @return Archive
      */
-    public static function response(): Response
+    public static function archive(): Archive
     {
-        return self::$response ?: (self::$response = new Response());
+        return self::$archive ?: (self::$archive = new Archive());
+    }
+
+    /**
+     * @return Membership
+     */
+    public static function membership(): Membership
+    {
+        return self::$membership ?: (self::$membership = new Membership());
+    }
+
+    /**
+     * @return Team
+     */
+    public static function team(): Team
+    {
+        return self::$team ?: (self::$team = new Team());
     }
 }

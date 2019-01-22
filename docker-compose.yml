@@ -9,7 +9,7 @@ services:
       - 'memcached'
       - 'mongo'
     volumes:
-      - './monitor-api:/var/www/monitor-api'
+      - './hawk-api:/var/www/hawk-api'
   nginx:
     image: 'nginx:latest'
     ports:
@@ -17,7 +17,7 @@ services:
     links:
       - 'backend'
     volumes:
-      - './docker/nginx/monitor-api.conf:/etc/nginx/conf.d/monitor-api.conf'
+      - './docker/nginx/hawk-api.conf:/etc/nginx/conf.d/hawk-api.conf'
     volumes_from:
       - 'backend'
   mongo:

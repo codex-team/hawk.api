@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Schema\Types;
+namespace App\Schema\Types\Requests;
 
 use App\Components\Models\{
     Project,
-    Response,
     User
 };
 use App\Schema\TypeRegistry;
@@ -29,25 +28,30 @@ class Query extends ObjectType
                 return [
                     'user' => [
                         'type' => TypeRegistry::user(),
-                        'description' => 'Return User by id',
+                        'description' => 'Return User by _id',
                         'args' => [
-                            'id' => Type::nonNull(Type::id()),
+                            '_id' => Type::nonNull(Type::id()),
                         ],
                         'resolve' => function ($root, $args) {
                             $user = new User();
 
-                            $user->findOne($args['id']);
+                            $user->findById($args['_id']);
 
                             return $user;
                         }
                     ],
                     'project' => [
                         'type' => TypeRegistry::project(),
-                        'description' => 'Return projects',
+                        'description' => 'Return Project by _id',
+                        'args' => [
+                            '_id' => Type::nonNull(Type::id()),
+                        ],
                         'resolve' => function ($root, $args) {
-                            return [
-                                //поля проекта
-                            ];
+                            $user = new User();
+
+                            $user->findById($args['_id']);
+
+                            return $user;
                         }
                     ],
                     'projects' => [
@@ -58,16 +62,7 @@ class Query extends ObjectType
 
                             return $projects->all();
                         }
-                    ],
-                    'response' => [
-                        'type' => TypeRegistry::response(),
-                        'description' => 'Return response of request to project URL',
-                        'resolve' => function ($root, $args) {
-                            return [
-                                //поля ответа
-                            ];
-                        }
-                    ],
+                    ]
                 ];
             }
         ];
