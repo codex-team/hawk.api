@@ -6,7 +6,12 @@ namespace App\Components\Models;
 
 class User extends BaseModel
 {
-    private const COLLECTION_NAME = 'users';
+    /**
+     * Associated collection name
+     *
+     * @var string
+     */
+    protected $collectionName = 'users';
 
     /**
      * User's unique identifier
@@ -28,14 +33,4 @@ class User extends BaseModel
      * @var string|null
      */
     public $password;
-
-    /**
-     * Return collection name
-     *
-     * @return string
-     */
-    protected function collectionName(): string
-    {
-        return self::COLLECTION_NAME;
-    }
 }

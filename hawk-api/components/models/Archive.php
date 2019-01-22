@@ -6,7 +6,12 @@ namespace App\Components\Models;
 
 class Archive extends BaseModel
 {
-    private const COLLECTION_NAME = 'archive';
+    /**
+     * Associated collection name
+     *
+     * @var string
+     */
+    protected $collectionName = 'archive';
 
     /**
      * Membership's unique identifier
@@ -35,14 +40,4 @@ class Archive extends BaseModel
      * @var int|null
      */
     public $archived;
-
-    /**
-     * Return collection name
-     *
-     * @return string
-     */
-    protected function collectionName(): string
-    {
-        return self::COLLECTION_NAME;
-    }
 }

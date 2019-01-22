@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Components\Models;
 
 use App\Components\Base\Mongo;
+use App\Components\Models\Exceptions\BaseModelException;
 use App\Components\Models\Exceptions\RecordNotFoundException;
 use MongoDB\BSON\ObjectId;
 use MongoDB\Collection;
@@ -17,11 +18,11 @@ use MongoDB\Collection;
 abstract class BaseModel
 {
     /**
-     * Return associated collection name
+     * Collection name, that associated with model
      *
-     * @return string
+     * @var string
      */
-    abstract protected function collectionName(): string;
+    protected $collectionName = '';
 
     /**
      * Base Model's constructor
@@ -178,12 +179,28 @@ abstract class BaseModel
     }
 
     /**
+     * Return associated collection name
+     *
+     * @throws BaseModelException
+     *
+     * @return string
+     */
+    protected function getCollectionName(): string
+    {
+        if (empty($this->collectionName)) {
+            throw new BaseModelException('Collection name is not defined');
+        }
+
+        return $this->collectionName;
+    }
+
+    /**
      * Return the associated collection
      *
      * @return \MongoDB\Collection
      */
     protected function assocCollection(): Collection
     {
-        return Mongo::database()->{$this->collectionName()};
+        return Mongo::database()->{$this->getCollectionName()};
     }
 }
