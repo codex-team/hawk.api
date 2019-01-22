@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Components\Models;
 
-class Membership extends BaseModel
+final class Membership extends BaseModel
 {
     private const COLLECTION_NAME_PATTERN = 'membership:%s';
 

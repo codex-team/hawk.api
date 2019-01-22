@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Components\Models;
 
-class Project extends BaseModel
+final class Project extends BaseModel
 {
     /**
      * Associated collection name

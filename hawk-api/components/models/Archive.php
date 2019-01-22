@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Components\Models;
 
-class Archive extends BaseModel
+final class Archive extends BaseModel
 {
     /**
      * Associated collection name

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Components\Models;
 
-class User extends BaseModel
+final class User extends BaseModel
 {
     /**
      * Associated collection name

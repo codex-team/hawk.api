@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Components\Models;
 
-class Team extends BaseModel
+final class Team extends BaseModel
 {
     private const COLLECTION_NAME_PATTERN = 'team:%s';
 
