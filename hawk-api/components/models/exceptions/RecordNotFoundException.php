@@ -12,7 +12,7 @@ namespace App\Components\Models\Exceptions;
 class RecordNotFoundException extends \Exception
 {
     /**
-     * ModelException constructor.
+     * RecordNotFoundException constructor.
      *
      * @param string          $collectionName
      * @param string          $message
