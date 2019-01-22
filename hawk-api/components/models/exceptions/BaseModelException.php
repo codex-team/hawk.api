@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Components\Models\Exceptions;
 
 /**
- * Class ModelException
+ * Class BaseModelException
  *
- * @package App\Components\Base\Exceptions
+ * @package App\Components\Models\Exceptions
  */
 class BaseModelException extends \Exception
 {
