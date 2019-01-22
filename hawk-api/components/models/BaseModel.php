@@ -21,7 +21,7 @@ abstract class BaseModel
      *
      * @return string
      */
-    abstract public function collectionName(): string;
+    abstract protected function collectionName(): string;
 
     /**
      * Base Model's constructor
@@ -166,7 +166,7 @@ abstract class BaseModel
      *
      * @return array
      */
-    protected function findOneWrapper(array $filter = []): array
+    private function findOneWrapper(array $filter = []): array
     {
         $mongoResult = $this->assocCollection()->findOne($filter);
 
@@ -182,7 +182,7 @@ abstract class BaseModel
      *
      * @return \MongoDB\Collection
      */
-    public function assocCollection(): Collection
+    protected function assocCollection(): Collection
     {
         return Mongo::database()->{$this->collectionName()};
     }

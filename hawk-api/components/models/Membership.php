@@ -6,7 +6,7 @@ namespace App\Components\Models;
 
 class Membership extends BaseModel
 {
-    protected const COLLECTION_NAME = 'membership:';
+    private const COLLECTION_NAME_PREFIX = 'membership:';
 
     /**
      * Membership's unique identifier
@@ -79,8 +79,8 @@ class Membership extends BaseModel
      *
      * @return string
      */
-    public function collectionName(): string
+    protected function collectionName(): string
     {
-        return self::COLLECTION_NAME . $this->userId;
+        return self::COLLECTION_NAME_PREFIX . $this->userId;
     }
 }

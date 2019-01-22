@@ -6,7 +6,7 @@ namespace App\Components\Models;
 
 class Project extends BaseModel
 {
-    protected const COLLECTION_NAME = 'projects';
+    private const COLLECTION_NAME = 'projects';
 
     /**
      * Unique identifier
@@ -74,7 +74,7 @@ class Project extends BaseModel
     /**
      * @return string
      */
-    public function collectionName(): string
+    protected function collectionName(): string
     {
         return self::COLLECTION_NAME;
     }

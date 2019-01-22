@@ -6,7 +6,7 @@ namespace App\Components\Models;
 
 class User extends BaseModel
 {
-    protected const COLLECTION_NAME = 'users';
+    private const COLLECTION_NAME = 'users';
 
     /**
      * User's unique identifier
@@ -34,7 +34,7 @@ class User extends BaseModel
      *
      * @return string
      */
-    public function collectionName(): string
+    protected function collectionName(): string
     {
         return self::COLLECTION_NAME;
     }

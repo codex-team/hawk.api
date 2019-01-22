@@ -6,7 +6,7 @@ namespace App\Components\Models;
 
 class Team extends BaseModel
 {
-    protected const COLLECTION_NAME = 'team:';
+    private const COLLECTION_NAME = 'team:';
 
     /**
      * Membership's unique identifier
@@ -65,7 +65,7 @@ class Team extends BaseModel
      *
      * @return string
      */
-    public function collectionName(): string
+   protected function collectionName(): string
     {
         return self::COLLECTION_NAME . $this->projectId;
     }
