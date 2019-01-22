@@ -19,6 +19,7 @@ abstract class BaseModel
 {
     /**
      * Collection name, that associated with model
+     * Must be override
      *
      * @var string
      */
@@ -108,21 +109,22 @@ abstract class BaseModel
 
         unset($args['_id']);
 
-        $query['_id'] = new ObjectId($idOfUpdatedRecord);
+        $filter['_id'] = new ObjectId($idOfUpdatedRecord);
 
         $update = [
             '$set' => $args
         ];
 
         $options = [
-            'upsert' => true,
             'returnDocument' => \MongoDB\Operation\FindOneAndUpdate::RETURN_DOCUMENT_AFTER
         ];
 
-        $mongoResult = $this->assocCollection()->findOneAndUpdate($query, $update, $options);
+        $mongoResult = $this->assocCollection()->findOneAndUpdate($filter, $update, $options);
 
         if ($mongoResult === null) {
-            throw new RecordNotFoundException($this->collectionName());
+            throw new RecordNotFoundException(
+                sprintf("No record found to update in collection '%s'", $this->getCollectionName())
+            );
         }
 
         return $mongoResult;
@@ -172,7 +174,9 @@ abstract class BaseModel
         $mongoResult = $this->assocCollection()->findOne($filter);
 
         if ($mongoResult === null) {
-            throw new RecordNotFoundException($this->collectionName());
+            throw new RecordNotFoundException(
+                sprintf("No record found in collection '%s'", $this->getCollectionName())
+            );
         }
 
         return $mongoResult;
@@ -185,7 +189,7 @@ abstract class BaseModel
      *
      * @return string
      */
-    protected function getCollectionName(): string
+    private function getCollectionName(): string
     {
         if (empty($this->collectionName)) {
             throw new BaseModelException('Collection name is not defined');
