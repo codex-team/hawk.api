@@ -1,0 +1,17 @@
+query Team {
+    team(
+        projectId: "5ac63f2fc162ec5628fdf6fc"
+        _id: "5ac63f2fc162ec5628fdf6fc"
+        userId: "5c4438f905e7b00007022614"
+    ) {
+        _id
+        userId
+        role
+        isPending
+        user {
+            _id
+            name
+            password
+        }
+    }
+}

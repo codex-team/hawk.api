@@ -1,0 +1,25 @@
+query Membership {
+    membership(
+        userId: "5c4438f905e7b00007022614"
+        _id: "c4438f905e7b0000safa33fa"
+        projectId: "5ac63f2fc162ec5628fdf6fc"
+    ) {
+        _id
+        projectId
+        projectUri
+        notifies
+        tgHook
+        slackHook
+        project {
+            id
+            token
+            name
+            description
+            domain
+            uri
+            logo
+            uidAdded
+            dtAdded
+        }
+    }
+}

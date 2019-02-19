@@ -1,0 +1,11 @@
+mutation User {
+    user(
+        _id: "5c4438f905e7b00007022614"
+        email: "ilya@yandex.ru"
+        password: "12321"
+    ) {
+        _id
+        name
+        password
+    }
+}
