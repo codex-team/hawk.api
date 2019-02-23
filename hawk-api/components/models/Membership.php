@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Components\Models;
 
+use MongoDB\BSON\ObjectId;
+
 final class Membership extends BaseModel
 {
     private const COLLECTION_NAME_PATTERN = 'membership:%s';
@@ -68,6 +70,18 @@ final class Membership extends BaseModel
         $this->userId = $userId;
         $this->collectionName = sprintf(self::COLLECTION_NAME_PATTERN, $userId);
         parent::__construct($args);
+    }
+
+    /**
+     * Remove userId and convert projectId to ObjectId before sync
+     *
+     * @param array $args
+     */
+    public function sync(array $args): void
+    {
+        unset($args['userId']);
+        $args['projectId'] = new ObjectId($args['projectId']);
+        parent::sync($args);
     }
 
     public function all(array $filter = []): array
