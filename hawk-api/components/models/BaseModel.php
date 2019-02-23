@@ -87,7 +87,7 @@ abstract class BaseModel
      *
      * @return array
      */
-    private function save(array $args): array
+    protected function save(array $args): array
     {
         $args['_id'] = $this->assocCollection()->insertOne($args)->getInsertedId();
 
@@ -103,7 +103,7 @@ abstract class BaseModel
      *
      * @return array
      */
-    private function update(array $args): array
+    protected function update(array $args): array
     {
         $idOfUpdatedRecord = $args['_id'];
 
@@ -169,7 +169,7 @@ abstract class BaseModel
      *
      * @return array
      */
-    private function findOneWrapper(array $filter = []): array
+    public function findOneWrapper(array $filter = []): array
     {
         $mongoResult = $this->assocCollection()->findOne($filter);
 
