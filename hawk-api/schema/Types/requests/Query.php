@@ -47,22 +47,22 @@ class Query extends ObjectType
                             '_id' => Type::nonNull(Type::id()),
                         ],
                         'resolve' => function ($root, $args) {
-                            $user = new User();
+                            $user = new Project();
 
                             $user->findById($args['_id']);
 
                             return $user;
                         }
                     ],
-                    'projects' => [
-                        'type' => Type::listOf(TypeRegistry::project()),
-                        'description' => 'Return all projects',
-                        'resolve' => function ($root, $args) {
-                            $projects = new Project();
-
-                            return $projects->all();
-                        }
-                    ]
+//                    'projects' => [
+//                        'type' => Type::listOf(TypeRegistry::project()),
+//                        'description' => 'Return all projects',
+//                        'resolve' => function ($root, $args) {
+//                            $projects = new Project();
+//
+//                            return $projects->all();
+//                        }
+//                    ]
                 ];
             }
         ];
