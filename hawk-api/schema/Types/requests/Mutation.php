@@ -95,7 +95,7 @@ class Mutation extends ObjectType
                         'description' => 'Sync team',
                         'args' => [
                             'projectId' => [
-                                'type' => Type::nonNull(Type::id()),
+                                'type' => Type::nonNull(Type::string()),
                                 'description' => 'Associated project unique identifier'
                             ],
                             '_id' => [
@@ -103,7 +103,7 @@ class Mutation extends ObjectType
                                 'description' => 'Unique identifier'
                             ],
                             'userId' => [
-                                'type' => Type::nonNull(Type::id()),
+                                'type' => Type::nonNull(Type::string()),
                                 'description' => 'Member of project team'
                             ],
                             'role' => [
@@ -125,7 +125,7 @@ class Mutation extends ObjectType
                         'description' => 'Sync membership',
                         'args' => [
                             'userId' => [
-                                'type' => Type::nonNull(Type::id()),
+                                'type' => Type::nonNull(Type::string()),
                                 'description' => 'Associated user unique identifier'
                             ],
                             '_id' => [
@@ -133,7 +133,7 @@ class Mutation extends ObjectType
                                 'description' => 'Unique identifier'
                             ],
                             'projectId' => [
-                                'type' => Type::nonNull(Type::id()),
+                                'type' => Type::nonNull(Type::string()),
                                 'description' => 'Project of user membership'
                             ],
                             'projectUri' => [
