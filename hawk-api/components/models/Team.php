@@ -71,6 +71,20 @@ final class Team extends BaseModel
     }
 
     /**
+     * @param array $filter
+     */
+    public function findOne(array $filter = []): void
+    {
+        unset($filter['projectId']);
+
+        if (array_key_exists('userId', $filter)) {
+            $filter['userId'] = new ObjectId($filter['userId']);
+        }
+
+        parent::findOne($filter);
+    }
+
+    /**
      * Return team participants from collection
      *
      * @param array $filter Filter to find records

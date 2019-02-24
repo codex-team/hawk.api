@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace App\Schema\Types\Requests;
 
-use App\Components\Models\{
-    Project,
-    User
-};
+use App\Components\Models\{Project, Team, User};
 use App\Schema\TypeRegistry;
 use GraphQL\Type\Definition\{
     ObjectType,
@@ -54,15 +51,22 @@ class Query extends ObjectType
                             return $user;
                         }
                     ],
-//                    'projects' => [
-//                        'type' => Type::listOf(TypeRegistry::project()),
-//                        'description' => 'Return all projects',
-//                        'resolve' => function ($root, $args) {
-//                            $projects = new Project();
-//
-//                            return $projects->all();
-//                        }
-//                    ]
+                    'team' => [
+                        'type' => TypeRegistry::team(),
+                        'description' => 'Return project\'s Team',
+                        'args' => [
+                            'projectId' => Type::nonNull(Type::string()),
+                            '_id' => Type::id(),
+                            'userId' => Type::string()
+                        ],
+                        'resolve' => function ($root, $args) {
+                            $team = new Team($args['projectId']);
+
+                            $team->findOne($args);
+
+                            return $team;
+                        }
+                    ]
                 ];
             }
         ];
