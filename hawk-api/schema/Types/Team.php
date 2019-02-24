@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Schema\Types;
 
+use App\Components\Models\Team as TeamModel;
 use App\Schema\TypeRegistry;
 use GraphQL\Type\Definition\{
     ObjectType,
     Type
 };
-use App\Components\Models\Team as TeamModel;
 
 /**
  * Class Project

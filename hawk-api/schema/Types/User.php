@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Schema\Types;
 
+use App\Components\Models\User as UserModel;
 use App\Schema\TypeRegistry;
 use GraphQL\Type\Definition\{
     ObjectType,
     Type
 };
-use App\Components\Models\User as UserModel;
 
 /**
  * Class User

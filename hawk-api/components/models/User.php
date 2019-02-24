@@ -50,7 +50,7 @@ final class User extends BaseModel
 
     /**
      * Get user's membership
-     * 
+     *
      * @param array $filer Filter to find records
      *
      * @return array
