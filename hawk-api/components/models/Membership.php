@@ -85,7 +85,7 @@ final class Membership extends BaseModel
     }
 
     /**
-     * Return membership from collection
+     * Get membership from collection
      *
      * @param array $filter Filter to find records
      *
@@ -110,5 +110,19 @@ final class Membership extends BaseModel
         }
 
         return $result;
+    }
+
+    /**
+     * Get Project model
+     *
+     * @return User
+     */
+    public function project(): Project
+    {
+        $project = new Project();
+
+        $project->findById($this->projectId);
+
+        return $project;
     }
 }

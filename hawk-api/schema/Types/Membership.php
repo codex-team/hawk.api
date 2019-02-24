@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Schema\Types;
 
+use App\Schema\TypeRegistry;
 use GraphQL\Type\Definition\{
     ObjectType,
     Type
 };
+use App\Components\Models\Membership as MembershipModel;
 
 /**
  * Class Project
@@ -44,6 +46,13 @@ class Membership extends ObjectType
                     'slackHook' => [
                         'type' => Type::string(),
                         'description' => 'Slack\'s hook to notify'
+                    ],
+                    'project' => [
+                        'type' => TypeRegistry::project(),
+                        'description' => 'Participant model',
+                        'resolve' => function (MembershipModel $root, $args) {
+                            return $root->project();
+                        }
                     ],
                 ];
             }
