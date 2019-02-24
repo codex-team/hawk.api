@@ -79,6 +79,14 @@ final class Team extends BaseModel
      */
     public function all(array $filter = []): array
     {
+        if (array_key_exists('_id', $filter)) {
+            $filter['_id'] = new ObjectId($filter['_id']);
+        }
+
+        if (array_key_exists('userId', $filter)) {
+            $filter['userId'] = new ObjectId($filter['userId']);
+        }
+
         $cursor = $this->assocCollection()->find($filter);
 
         $result = [];

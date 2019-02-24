@@ -70,7 +70,12 @@ class Project extends ObjectType
                     ],
                     'team' => [
                         'type' => Type::listOf(TypeRegistry::team()),
-                        'description' => 'Project\'s teams',
+                        'description' => 'Project\'s team',
+                        'args' => [
+                            '_id' => Type::id(),
+                            'userId' => Type::string(),
+                            'role' => Type::string()
+                        ],
                         'resolve' => function (ProjectModel $root, $args) {
                             return $root->team($args);
                         }
