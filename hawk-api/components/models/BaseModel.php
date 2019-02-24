@@ -160,7 +160,17 @@ abstract class BaseModel
      */
     public function findById(string $_id): void
     {
-        $this->fillModel($this->findOne(['_id' => new ObjectId($_id)]));
+        $this->fillModel($this->findOneWrapper(['_id' => $_id]));
+    }
+
+    /**
+     * Find and fill model by filter
+     *
+     * @param array $filter Filter to find record
+     */
+    public function findOne(array $filter = []): void
+    {
+        $this->fillModel($this->findOneWrapper($filter));
     }
 
     /**
@@ -172,8 +182,12 @@ abstract class BaseModel
      *
      * @return array
      */
-    public function findOne(array $filter = []): array
+    public function findOneWrapper(array $filter = []): array
     {
+        if (array_key_exists('_id', $filter) && (!$filter['_id'] instanceof ObjectId)) {
+            $filter['_id'] = new ObjectId($filter['_id']);
+        }
+
         $mongoResult = $this->assocCollection()->findOne($filter);
 
         if ($mongoResult === null) {
