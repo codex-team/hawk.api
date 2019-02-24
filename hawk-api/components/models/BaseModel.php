@@ -142,6 +142,10 @@ abstract class BaseModel
      */
     public function all(array $filter = []): array
     {
+        if (array_key_exists('_id', $filter) && (!$filter['_id'] instanceof ObjectId)) {
+            $filter['_id'] = new ObjectId($filter['_id']);
+        }
+
         $cursor = $this->assocCollection()->find($filter);
 
         $result = [];
@@ -168,7 +172,7 @@ abstract class BaseModel
      *
      * @param array $filter Filter to find record
      */
-    public function findOne(array $filter = []): void
+    public function findOne(array $filter): void
     {
         $this->fillModel($this->findOneWrapper($filter));
     }
