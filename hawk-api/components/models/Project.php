@@ -101,7 +101,7 @@ final class Project extends BaseModel
     {
         $user = new User();
 
-        $user->findById((string) $this->uidAdded);
+        $user->findById($this->uidAdded);
 
         return $user;
     }
@@ -115,7 +115,7 @@ final class Project extends BaseModel
      */
     public function team(array $filter = []): array
     {
-        $team = new Team((string) $this->_id);
+        $team = new Team($this->_id);
 
         return $team->all($filter);
     }

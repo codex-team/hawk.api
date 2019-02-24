@@ -46,6 +46,9 @@ abstract class BaseModel
     {
         foreach ($data as $key => $value) {
             if (property_exists($this, $key)) {
+                if ($value instanceof ObjectId) {
+                    $value = (string) $value;
+                }
                 $this->$key = $value;
             }
         }
@@ -131,7 +134,7 @@ abstract class BaseModel
     }
 
     /**
-     * Return all records from collection (by filter)
+     * Return all records from collection
      *
      * @param array $filter Filter to find records
      *
@@ -157,7 +160,7 @@ abstract class BaseModel
      */
     public function findById(string $_id): void
     {
-        $this->fillModel($this->findOneWrapper(['_id' => new ObjectId($_id)]));
+        $this->fillModel($this->findOne(['_id' => new ObjectId($_id)]));
     }
 
     /**
@@ -169,7 +172,7 @@ abstract class BaseModel
      *
      * @return array
      */
-    public function findOneWrapper(array $filter = []): array
+    public function findOne(array $filter = []): array
     {
         $mongoResult = $this->assocCollection()->findOne($filter);
 
