@@ -71,7 +71,9 @@ final class Team extends BaseModel
     }
 
     /**
-     * @param array $filter
+     * Get one team by filter
+     *
+     * @param array $filter Conditions to find one
      */
     public function findOne(array $filter = []): void
     {
@@ -85,7 +87,7 @@ final class Team extends BaseModel
     }
 
     /**
-     * Return team participants from collection
+     * Get team participants from collection
      *
      * @param array $filter Filter to find records
      *
@@ -110,5 +112,19 @@ final class Team extends BaseModel
         }
 
         return $result;
+    }
+
+    /**
+     * Get Participant model
+     *
+     * @return User
+     */
+    public function user(): User
+    {
+        $user = new User();
+
+        $user->findById($this->userId);
+
+        return $user;
     }
 }
