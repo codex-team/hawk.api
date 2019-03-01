@@ -134,7 +134,7 @@ abstract class BaseModel
     }
 
     /**
-     * Return all records from collection
+     * Get all records from collection
      *
      * @param array $filter Filter to find records
      *
@@ -204,7 +204,7 @@ abstract class BaseModel
     }
 
     /**
-     * Return associated collection name
+     * Get associated collection name
      *
      * @throws BaseModelException
      *
@@ -220,7 +220,7 @@ abstract class BaseModel
     }
 
     /**
-     * Return the associated collection
+     * Get the associated collection
      *
      * @return \MongoDB\Collection
      */
