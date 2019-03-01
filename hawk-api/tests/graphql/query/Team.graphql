@@ -10,7 +10,7 @@ query Team {
         isPending
         user {
             _id
-            name
+            email
             password
         }
     }

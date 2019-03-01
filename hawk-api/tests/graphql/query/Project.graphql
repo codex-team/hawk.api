@@ -3,9 +3,9 @@ query Project {
         _id: "5ac63f2fc162ec5628fdf6fc"
         token: "63f2fc-162ec"
     ) {
-        id
+        _id
         token
-        name
+        email
         description
         domain
         uri

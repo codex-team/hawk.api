@@ -4,7 +4,7 @@ query User {
         email: "ilya@yandex.ru"
     ) {
         _id
-        name
+        email
         password
         projects {
             id
