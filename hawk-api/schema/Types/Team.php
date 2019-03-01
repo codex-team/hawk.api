@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Schema\Types;
 
+use App\Components\Models\Team as TeamModel;
+use App\Schema\TypeRegistry;
 use GraphQL\Type\Definition\{
     ObjectType,
     Type
@@ -36,7 +38,14 @@ class Team extends ObjectType
                     'isPending' => [
                         'type' => Type::string(),
                         'description' => 'Pending status'
-                    ]
+                    ],
+                    'user' => [
+                        'type' => TypeRegistry::user(),
+                        'description' => 'Participant model',
+                        'resolve' => function (TeamModel $root, $args) {
+                            return $root->user();
+                        }
+                    ],
                 ];
             }
         ];

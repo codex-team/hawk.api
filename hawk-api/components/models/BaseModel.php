@@ -46,6 +46,9 @@ abstract class BaseModel
     {
         foreach ($data as $key => $value) {
             if (property_exists($this, $key)) {
+                if ($value instanceof ObjectId) {
+                    $value = (string) $value;
+                }
                 $this->$key = $value;
             }
         }
@@ -87,7 +90,7 @@ abstract class BaseModel
      *
      * @return array
      */
-    private function save(array $args): array
+    protected function save(array $args): array
     {
         $args['_id'] = $this->assocCollection()->insertOne($args)->getInsertedId();
 
@@ -103,7 +106,7 @@ abstract class BaseModel
      *
      * @return array
      */
-    private function update(array $args): array
+    protected function update(array $args): array
     {
         $idOfUpdatedRecord = $args['_id'];
 
@@ -131,7 +134,7 @@ abstract class BaseModel
     }
 
     /**
-     * Return all records from collection (by filter)
+     * Get all records from collection
      *
      * @param array $filter Filter to find records
      *
@@ -139,6 +142,11 @@ abstract class BaseModel
      */
     public function all(array $filter = []): array
     {
+        //TODO: универсальная функция преобразования в ObjectID
+        if (array_key_exists('_id', $filter) && (!$filter['_id'] instanceof ObjectId)) {
+            $filter['_id'] = new ObjectId($filter['_id']);
+        }
+
         $cursor = $this->assocCollection()->find($filter);
 
         $result = [];
@@ -157,7 +165,17 @@ abstract class BaseModel
      */
     public function findById(string $_id): void
     {
-        $this->fillModel($this->findOneWrapper(['_id' => new ObjectId($_id)]));
+        $this->fillModel($this->findOneWrapper(['_id' => $_id]));
+    }
+
+    /**
+     * Find and fill model by filter
+     *
+     * @param array $filter Filter to find record
+     */
+    public function findOne(array $filter): void
+    {
+        $this->fillModel($this->findOneWrapper($filter));
     }
 
     /**
@@ -169,8 +187,12 @@ abstract class BaseModel
      *
      * @return array
      */
-    private function findOneWrapper(array $filter = []): array
+    public function findOneWrapper(array $filter = []): array
     {
+        if (array_key_exists('_id', $filter) && (!$filter['_id'] instanceof ObjectId)) {
+            $filter['_id'] = new ObjectId($filter['_id']);
+        }
+
         $mongoResult = $this->assocCollection()->findOne($filter);
 
         if ($mongoResult === null) {
@@ -183,7 +205,7 @@ abstract class BaseModel
     }
 
     /**
-     * Return associated collection name
+     * Get associated collection name
      *
      * @throws BaseModelException
      *
@@ -199,7 +221,7 @@ abstract class BaseModel
     }
 
     /**
-     * Return the associated collection
+     * Get the associated collection
      *
      * @return \MongoDB\Collection
      */

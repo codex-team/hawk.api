@@ -1,0 +1,20 @@
+mutation Project {
+    project (
+        _id: "5ac63f2fc162ec5628fdf6fc"
+        name: "CodeX"
+        description: "codex codex"
+        domain: "https://codex.so"
+        uri: "codexso"
+        logo: "https://capella.pics/7bcd9f461edc"
+    ) {
+        id
+        token
+        name
+        description
+        domain
+        uri
+        logo
+        uidAdded
+        dtAdded
+    }
+}

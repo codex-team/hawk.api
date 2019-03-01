@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace App\Schema\Types\Requests;
 
-use App\Components\Models\{
-    Project,
-    User
-};
+use App\Components\Models\{Membership, Project, Team, User};
 use App\Schema\TypeRegistry;
 use GraphQL\Type\Definition\{
     ObjectType,
@@ -28,7 +25,7 @@ class Query extends ObjectType
                 return [
                     'user' => [
                         'type' => TypeRegistry::user(),
-                        'description' => 'Return User by _id',
+                        'description' => 'Get User by _id',
                         'args' => [
                             '_id' => Type::nonNull(Type::id()),
                         ],
@@ -42,25 +39,49 @@ class Query extends ObjectType
                     ],
                     'project' => [
                         'type' => TypeRegistry::project(),
-                        'description' => 'Return Project by _id',
+                        'description' => 'Get Project by _id',
                         'args' => [
                             '_id' => Type::nonNull(Type::id()),
                         ],
                         'resolve' => function ($root, $args) {
-                            $user = new User();
+                            $user = new Project();
 
                             $user->findById($args['_id']);
 
                             return $user;
                         }
                     ],
-                    'projects' => [
-                        'type' => Type::listOf(TypeRegistry::project()),
-                        'description' => 'Return all projects',
+                    'team' => [
+                        'type' => Type::listOf(TypeRegistry::team()),
+                        'description' => 'Get project\'s Team',
+                        'args' => [
+                            'projectId' => Type::nonNull(Type::string()),
+                            '_id' => Type::id(),
+                            'userId' => Type::string()
+                        ],
                         'resolve' => function ($root, $args) {
-                            $projects = new Project();
+                            $team = new Team($args['projectId']);
 
-                            return $projects->all();
+                            unset($args['projectId']);
+
+                            return $team->all($args);
+                        }
+                    ],
+                    'membership' => [
+                        'type' => Type::listOf(TypeRegistry::membership()),
+                        'description' => 'Get user\'s Membership',
+                        'args' => [
+                            'userId' => Type::nonNull(Type::string()),
+                            '_id' => Type::id(),
+                            'projectId' => Type::string(),
+                            'projectUri' => Type::string()
+                        ],
+                        'resolve' => function ($root, $args) {
+                            $membership = new Membership($args['userId']);
+
+                            unset($args['userId']);
+
+                            return $membership->all($args);
                         }
                     ]
                 ];

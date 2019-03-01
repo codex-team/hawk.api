@@ -7,7 +7,7 @@ namespace App\Components\Models;
 final class Archive extends BaseModel
 {
     /**
-     * Associated collection name
+     * Associated collection's name
      *
      * @var string
      */

@@ -1,0 +1,27 @@
+query Project {
+    project(
+        _id: "5ac63f2fc162ec5628fdf6fc"
+        token: "63f2fc-162ec"
+    ) {
+        _id
+        token
+        email
+        description
+        domain
+        uri
+        logo
+        uidAdded
+        dtAdded
+        user {
+            _id
+            name
+            password
+        }
+        team {
+            _id
+            userId
+            role
+            isPending
+        }
+    }
+}

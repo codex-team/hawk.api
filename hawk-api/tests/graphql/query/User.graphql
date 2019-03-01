@@ -1,0 +1,29 @@
+query User {
+    user(
+        _id: "5c4438f905e7b00007022614"
+        email: "ilya@yandex.ru"
+    ) {
+        _id
+        email
+        password
+        projects {
+            id
+            token
+            name
+            description
+            domain
+            uri
+            logo
+            uidAdded
+            dtAdded
+        }
+        membership {
+            _id
+            projectId
+            projectUri
+            notifies
+            tgHook
+            slackHook
+        }
+    }
+}

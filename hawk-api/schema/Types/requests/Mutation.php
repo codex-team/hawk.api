@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace App\Schema\Types\Requests;
 
-use App\Components\Models\{
-    Project,
-    User
-};
+use App\Components\Models\{Membership, Project, Team, User};
 use App\Schema\TypeRegistry;
 use GraphQL\Type\Definition\{
     ObjectType,
@@ -72,7 +69,7 @@ class Mutation extends ObjectType
                                 'description' => 'Description'
                             ],
                             'domain' => [
-                                'type' => Type::string(),
+                                'type' => Type::nonNull(Type::string()),
                                 'description' => 'Domain'
                             ],
                             'uri' => [
@@ -83,10 +80,7 @@ class Mutation extends ObjectType
                                 'type' => Type::string(),
                                 'description' => 'Logo URL'
                             ],
-                            'id_added' => [
-                                'type' => Type::string(),
-                                'description' => 'Owner\'s unique identifier'
-                            ],
+                            //TODO: uidAdded автоматически
                         ],
                         'resolve' => function ($root, $args) {
                             $project = new Project();
@@ -94,6 +88,81 @@ class Mutation extends ObjectType
                             $project->sync($args);
 
                             return $project;
+                        }
+                    ],
+                    'team' => [
+                        'type' => TypeRegistry::team(),
+                        'description' => 'Sync team',
+                        'args' => [
+                            'projectId' => [
+                                'type' => Type::nonNull(Type::string()),
+                                'description' => 'Associated project unique identifier'
+                            ],
+                            '_id' => [
+                                'type' => Type::id(),
+                                'description' => 'Unique identifier'
+                            ],
+                            'userId' => [
+                                'type' => Type::nonNull(Type::string()),
+                                'description' => 'Member of project team'
+                            ],
+                            'role' => [
+                                'type' => Type::nonNull(Type::string()),
+                                'description' => 'Role of team member'
+                            ]
+                            //TODO: isPending автоматически на true, если не указано иное
+                        ],
+                        'resolve' => function ($root, $args) {
+                            $team = new Team($args['projectId']);
+
+                            unset($args['projectId']);
+
+                            $team->sync($args);
+
+                            return $team;
+                        }
+                    ],
+                    'membership' => [
+                        'type' => TypeRegistry::membership(),
+                        'description' => 'Sync membership',
+                        'args' => [
+                            'userId' => [
+                                'type' => Type::nonNull(Type::string()),
+                                'description' => 'Associated user unique identifier'
+                            ],
+                            '_id' => [
+                                'type' => Type::id(),
+                                'description' => 'Unique identifier'
+                            ],
+                            'projectId' => [
+                                'type' => Type::nonNull(Type::string()),
+                                'description' => 'Project of user membership'
+                            ],
+                            'projectUri' => [
+                                'type' => Type::string(),
+                                'description' => 'URI'
+                            ],
+                            'notifies' => [
+                                'type' => Type::listOf(Type::string()),
+                                'description' => 'Where to notify'
+                            ],
+                            'tgHook' => [
+                                'type' => Type::string(),
+                                'description' => 'Hook for Telegram notifications'
+                            ],
+                            'slackHook' => [
+                                'type' => Type::string(),
+                                'description' => 'Hook for Slack notifications'
+                            ]
+                        ],
+                        'resolve' => function ($root, $args) {
+                            $membership = new Membership($args['userId']);
+
+                            unset($args['userId']);
+
+                            $membership->sync($args);
+
+                            return $membership;
                         }
                     ]
                 ];

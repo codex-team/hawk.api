@@ -9,7 +9,13 @@ use App\Schema\Types\Requests\{
     Query
 };
 
-use App\Schema\Types\{Archive, Membership, Project, Team, User};
+use App\Schema\Types\{
+    Archive,
+    Membership,
+    Project,
+    Team,
+    User
+};
 
 /**
  * Class TypeRegistry

@@ -9,6 +9,11 @@ use MongoDB\Database;
 
 class Mongo
 {
+    /**
+     * Connection to Mongo
+     *
+     * @var Client
+     */
     private static $connection;
 
     /**
@@ -19,13 +24,13 @@ class Mongo
     }
 
     /**
-     * Get connection to mongo
+     * Get connection to Mongo
      *
      * @param string|null $database
      *
      * @return Client
      */
-    public static function connection(string $database = null): Client
+    public static function connection(): Client
     {
         if (!isset(self::$connection)) {
             $domain = getenv('MONGO_HOST') ?? 'localhost';
