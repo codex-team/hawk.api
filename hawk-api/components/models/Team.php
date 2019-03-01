@@ -65,7 +65,6 @@ final class Team extends BaseModel
      */
     public function sync(array $args): void
     {
-        unset($args['projectId']);
         $args['userId'] = new ObjectId($args['userId']);
         parent::sync($args);
     }

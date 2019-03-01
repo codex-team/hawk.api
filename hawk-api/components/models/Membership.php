@@ -79,8 +79,8 @@ final class Membership extends BaseModel
      */
     public function sync(array $args): void
     {
-        unset($args['userId']);
         $args['projectId'] = new ObjectId($args['projectId']);
+
         parent::sync($args);
     }
 

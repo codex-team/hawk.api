@@ -142,6 +142,7 @@ abstract class BaseModel
      */
     public function all(array $filter = []): array
     {
+        //TODO: универсальная функция преобразования в ObjectID
         if (array_key_exists('_id', $filter) && (!$filter['_id'] instanceof ObjectId)) {
             $filter['_id'] = new ObjectId($filter['_id']);
         }

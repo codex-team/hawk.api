@@ -80,7 +80,7 @@ class Mutation extends ObjectType
                                 'type' => Type::string(),
                                 'description' => 'Logo URL'
                             ],
-                            //TODO: dtAdded и uidAdded автоматически
+                            //TODO: uidAdded автоматически
                         ],
                         'resolve' => function ($root, $args) {
                             $project = new Project();
@@ -114,6 +114,8 @@ class Mutation extends ObjectType
                         ],
                         'resolve' => function ($root, $args) {
                             $team = new Team($args['projectId']);
+
+                            unset($args['projectId']);
 
                             $team->sync($args);
 
@@ -155,6 +157,8 @@ class Mutation extends ObjectType
                         ],
                         'resolve' => function ($root, $args) {
                             $membership = new Membership($args['userId']);
+
+                            unset($args['userId']);
 
                             $membership->sync($args);
 
