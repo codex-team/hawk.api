@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Components\Models;
 
-use MongoDB\BSON\ObjectId;
-
 final class Team extends BaseModel
 {
     private const COLLECTION_NAME_PATTERN = 'team:%s';
@@ -65,7 +63,7 @@ final class Team extends BaseModel
      */
     public function sync(array $args): void
     {
-        $args['userId'] = new ObjectId($args['userId']);
+        $this->valuesToObjectId($args, 'userId');
         parent::sync($args);
     }
 
@@ -78,13 +76,7 @@ final class Team extends BaseModel
      */
     public function all(array $filter = []): array
     {
-        if (array_key_exists('_id', $filter)) {
-            $filter['_id'] = new ObjectId($filter['_id']);
-        }
-
-        if (array_key_exists('userId', $filter)) {
-            $filter['userId'] = new ObjectId($filter['userId']);
-        }
+        $this->valuesToObjectId($filter, '_id', 'userId');
 
         $cursor = $this->assocCollection()->find($filter);
 

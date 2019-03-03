@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Components\Models;
 
-use MongoDB\BSON\ObjectId;
-
 final class Membership extends BaseModel
 {
     private const COLLECTION_NAME_PATTERN = 'membership:%s';
@@ -79,7 +77,7 @@ final class Membership extends BaseModel
      */
     public function sync(array $args): void
     {
-        $args['projectId'] = new ObjectId($args['projectId']);
+        $this->valuesToObjectId($args, 'projectId');
 
         parent::sync($args);
     }
@@ -93,13 +91,7 @@ final class Membership extends BaseModel
      */
     public function all(array $filter = []): array
     {
-        if (array_key_exists('_id', $filter)) {
-            $filter['_id'] = new ObjectId($filter['_id']);
-        }
-
-        if (array_key_exists('projectId', $filter)) {
-            $filter['projectId'] = new ObjectId($filter['projectId']);
-        }
+        $this->valuesToObjectId($filter, '_id', 'projectId');
 
         $cursor = $this->assocCollection()->find($filter);
 

@@ -142,10 +142,7 @@ abstract class BaseModel
      */
     public function all(array $filter = []): array
     {
-        //TODO: универсальная функция преобразования в ObjectID
-        if (array_key_exists('_id', $filter) && (!$filter['_id'] instanceof ObjectId)) {
-            $filter['_id'] = new ObjectId($filter['_id']);
-        }
+        $this->valuesToObjectId($filter, '_id');
 
         $cursor = $this->assocCollection()->find($filter);
 
@@ -189,9 +186,7 @@ abstract class BaseModel
      */
     public function findOneWrapper(array $filter = []): array
     {
-        if (array_key_exists('_id', $filter) && (!$filter['_id'] instanceof ObjectId)) {
-            $filter['_id'] = new ObjectId($filter['_id']);
-        }
+        $this->valuesToObjectId($filter, '_id');
 
         $mongoResult = $this->assocCollection()->findOne($filter);
 
@@ -228,5 +223,27 @@ abstract class BaseModel
     protected function assocCollection(): Collection
     {
         return Mongo::database()->{$this->getCollectionName()};
+    }
+
+    /**
+     * Convert ID values in array by given keys
+     *
+     * @param array  $array
+     * @param string ...$keys
+     *
+     * @return bool
+     */
+    protected function valuesToObjectId(array &$array, string ...$keys): bool
+    {
+        $converted = false;
+
+        foreach ($keys as $key) {
+            if (array_key_exists($key, $array) && (!$array[$key] instanceof ObjectId)) {
+                $array[$key] = new ObjectId($array[$key]);
+                $converted = true;
+            }
+        }
+
+        return $converted;
     }
 }
