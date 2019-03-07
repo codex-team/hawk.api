@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Components\Models;
 
+use MongoDB\BSON\ObjectId;
+
 final class User extends BaseModel
 {
     /**
@@ -37,13 +39,18 @@ final class User extends BaseModel
     /**
      * Get user's projects
      *
-     * @param $filter
+     * @param array $filter Filter to find records
      *
      * @return array
      */
     public function projects(array $filter = []): array
     {
         $project = new Project();
+
+        $filter = array_merge(
+            $filter,
+            ['uidAdded' => new ObjectId($this->_id)]
+        );
 
         return $project->all($filter);
     }
