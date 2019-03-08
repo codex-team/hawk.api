@@ -77,7 +77,7 @@ final class Membership extends BaseModel
      */
     public function sync(array $args): void
     {
-        $this->valuesToObjectId($args, 'projectId');
+        $this->arrayValuesToObjectId($args, 'projectId');
 
         parent::sync($args);
     }
@@ -91,7 +91,7 @@ final class Membership extends BaseModel
      */
     public function all(array $filter = []): array
     {
-        $this->valuesToObjectId($filter, '_id', 'projectId');
+        $this->arrayValuesToObjectId($filter, '_id', 'projectId');
 
         $cursor = $this->assocCollection()->find($filter);
 

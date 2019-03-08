@@ -63,7 +63,7 @@ final class Team extends BaseModel
      */
     public function sync(array $args): void
     {
-        $this->valuesToObjectId($args, 'userId');
+        $this->arrayValuesToObjectId($args, 'userId');
         parent::sync($args);
     }
 
@@ -76,7 +76,7 @@ final class Team extends BaseModel
      */
     public function all(array $filter = []): array
     {
-        $this->valuesToObjectId($filter, '_id', 'userId');
+        $this->arrayValuesToObjectId($filter, '_id', 'userId');
 
         $cursor = $this->assocCollection()->find($filter);
 
