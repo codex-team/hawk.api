@@ -39,6 +39,10 @@ class Mutation extends ObjectType
                                 'type' => Type::nonNull(Type::string()),
                                 'description' => 'Password'
                             ],
+                            'workspaces' => [
+                                'type' => Type::nonNull(Type::listOf(Type::string())),
+                                'description' => 'Workspaces'
+                            ],
                         ],
                         'resolve' => function ($root, $args) {
                             $user = new User();
