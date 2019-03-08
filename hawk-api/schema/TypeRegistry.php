@@ -4,18 +4,8 @@ declare(strict_types=1);
 
 namespace App\Schema;
 
-use App\Schema\Types\Requests\{
-    Mutation,
-    Query
-};
-
-use App\Schema\Types\{
-    Archive,
-    Membership,
-    Project,
-    Team,
-    User
-};
+use App\Schema\Types\Requests\{Mutation, Query};
+use App\Schema\Types\{Archive, Membership, Project, Team, User, Workspace};
 
 /**
  * Class TypeRegistry
@@ -34,6 +24,7 @@ class TypeRegistry
     private static $archive;
     private static $membership;
     private static $team;
+    private static $workspace;
 
     /**
      * @return Query
@@ -89,5 +80,13 @@ class TypeRegistry
     public static function team(): Team
     {
         return self::$team ?: (self::$team = new Team());
+    }
+
+    /**
+     * @return Workspace
+     */
+    public static function workspace(): Workspace
+    {
+        return self::$workspace ?: (self::$workspace = new Workspace());
     }
 }
