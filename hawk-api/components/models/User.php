@@ -44,6 +44,18 @@ final class User extends BaseModel
     public $workspaces;
 
     /**
+     * Convert user workspaces before sync
+     *
+     * @param array $args
+     */
+    public function sync(array $args): void
+    {
+        $args = array_merge($args, ['workspaces' => $this->arrayToObjectIds($args['workspaces'] ?? [])]);
+
+        parent::sync($args);
+    }
+
+    /**
      * Get user's projects
      *
      * @param array $filter Filter to find records
@@ -54,10 +66,7 @@ final class User extends BaseModel
     {
         $project = new Project();
 
-        $filter = array_merge(
-            $filter,
-            ['uidAdded' => new ObjectId($this->_id)]
-        );
+        $filter = array_merge($filter, ['uidAdded' => new ObjectId($this->_id)]);
 
         return $project->all($filter);
     }

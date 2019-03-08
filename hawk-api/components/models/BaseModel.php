@@ -142,7 +142,7 @@ abstract class BaseModel
      */
     public function all(array $filter = []): array
     {
-        $this->valuesToObjectId($filter, '_id');
+        $this->arrayValuesToObjectId($filter, '_id');
 
         $cursor = $this->assocCollection()->find($filter);
 
@@ -186,7 +186,7 @@ abstract class BaseModel
      */
     public function findOneWrapper(array $filter = []): array
     {
-        $this->valuesToObjectId($filter, '_id');
+        $this->arrayValuesToObjectId($filter, '_id');
 
         $mongoResult = $this->assocCollection()->findOne($filter);
 
@@ -233,7 +233,7 @@ abstract class BaseModel
      *
      * @return bool
      */
-    protected function valuesToObjectId(array &$array, string ...$keys): bool
+    protected function arrayValuesToObjectId(array &$array, string ...$keys): bool
     {
         $converted = false;
 
@@ -245,5 +245,25 @@ abstract class BaseModel
         }
 
         return $converted;
+    }
+
+    /**
+     * Convert ID values in array
+     *
+     * @param array $array
+     *
+     * @return array
+     */
+    protected function arrayToObjectIds(array $array): array
+    {
+        $result = [];
+
+        if (!empty($array)) {
+            foreach ($array as $value) {
+                $result[] = $value instanceof ObjectId ? $value : new ObjectId($value);
+            }
+        }
+
+        return $result;
     }
 }

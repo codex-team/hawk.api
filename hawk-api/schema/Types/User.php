@@ -35,6 +35,10 @@ class User extends ObjectType
                         'type' => Type::string(),
                         'description' => 'Password'
                     ],
+                    'workspaces' => [
+                        'type' => Type::listOf(Type::string()),
+                        'description' => 'User\'s workspaces'
+                    ],
                     'projects' => [
                         'type' => Type::listOf(TypeRegistry::project()),
                         'description' => 'User\'s projects',
