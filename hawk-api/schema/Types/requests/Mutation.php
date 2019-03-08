@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Schema\Types\Requests;
 
-use App\Components\Models\{Membership, Project, Team, User};
+use App\Components\Models\{Membership, Project, Team, User, Workspace};
 use App\Schema\TypeRegistry;
 use GraphQL\Type\Definition\{
     ObjectType,
@@ -164,7 +164,40 @@ class Mutation extends ObjectType
 
                             return $membership;
                         }
-                    ]
+                    ],
+                    'workspace' => [
+                        'type' => TypeRegistry::workspace(),
+                        'description' => 'Sync Project',
+                        'args' => [
+                            '_id' => [
+                                'type' => Type::id(),
+                                'description' => 'Unique identifier'
+                            ],
+                            'name' => [
+                                'type' => Type::nonNull(Type::string()),
+                                'description' => 'Name'
+                            ],
+                            'logo' => [
+                                'type' => Type::string(),
+                                'description' => 'Logo URL'
+                            ],
+                            'users' => [
+                                'type' => Type::nonNull(Type::listOf(Type::string())),
+                                'description' => 'List of participants'
+                            ],
+                            'projects' => [
+                                'type' => Type::listOf(Type::string()),
+                                'description' => 'List of workspace project'
+                            ],
+                        ],
+                        'resolve' => function ($root, $args) {
+                            $workspace = new Workspace();
+
+                            $workspace->sync($args);
+
+                            return $workspace;
+                        }
+                    ],
                 ];
             }
         ];

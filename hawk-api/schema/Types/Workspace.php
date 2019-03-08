@@ -25,9 +25,9 @@ class Workspace extends ObjectType
                         'type' => Type::string(),
                         'description' => 'Workspace title'
                     ],
-                    'image' => [
+                    'logo' => [
                         'type' => Type::string(),
-                        'description' => 'Image URL'
+                        'description' => 'Logo image URL'
                     ],
                     'users' => [
                         'type' => Type::listOf(Type::string()),

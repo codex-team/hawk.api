@@ -2,6 +2,8 @@
 
 namespace App\Components\Models;
 
+use MongoDB\BSON\ObjectId;
+
 final class Workspace extends BaseModel
 {
     /**
@@ -26,11 +28,11 @@ final class Workspace extends BaseModel
     public $name;
 
     /**
-     * Image URL
+     * Logo image URL
      *
      * @var string|null
      */
-    public $image;
+    public $logo;
 
     /**
      * Contains ids of participants
@@ -45,4 +47,31 @@ final class Workspace extends BaseModel
      * @var array|null
      */
     public $projects;
+
+    /**
+     * Convert array of string Id to ObjectId
+     *
+     * @param array $args
+     */
+    public function sync(array $args): void
+    {
+        $arrayToObjectId = function ($array) {
+            $result = [];
+
+            if (!empty($array)) {
+                foreach ($array as $value) {
+                    $result[] = new ObjectId($value);
+                }
+            }
+
+            return $result;
+        };
+
+        $args = array_merge($args, [
+            'users' => $arrayToObjectId($args['users']),
+            'projects' => $arrayToObjectId($args['projects'])
+        ]);
+
+        parent::sync($args);
+    }
 }
