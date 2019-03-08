@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Schema\Types\Requests;
 
-use App\Components\Models\{Membership, Project, Team, User};
+use App\Components\Models\{Membership, Project, Team, User, Workspace};
 use App\Schema\TypeRegistry;
 use GraphQL\Type\Definition\{
     ObjectType,
@@ -83,7 +83,21 @@ class Query extends ObjectType
 
                             return $membership->all($args);
                         }
-                    ]
+                    ],
+                    'workspace' => [
+                        'type' => TypeRegistry::workspace(),
+                        'description' => 'Get Workspace by _id',
+                        'args' => [
+                            '_id' => Type::nonNull(Type::id()),
+                        ],
+                        'resolve' => function ($root, $args) {
+                            $workspace = new Workspace();
+
+                            $workspace->findById($args['_id']);
+
+                            return $workspace;
+                        }
+                    ],
                 ];
             }
         ];

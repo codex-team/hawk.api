@@ -37,6 +37,13 @@ final class User extends BaseModel
     public $password;
 
     /**
+     * Available workspaces
+     *
+     * @var array|null
+     */
+    public $workspaces;
+
+    /**
      * Get user's projects
      *
      * @param array $filter Filter to find records
