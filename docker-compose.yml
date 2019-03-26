@@ -1,26 +1,26 @@
 version: '2'
 
 services:
-  memcached:
-    image: 'memcached:alpine'
   backend:
     build: 'docker/backend'
     links:
-      - 'memcached'
-      - 'mongo'
+      - memcached
+      - mongo
     volumes:
       - './hawk-api:/var/www/hawk-api'
   nginx:
     image: 'nginx:latest'
     ports:
-      - '${NGINX_PORT}:8080'
+      - 8080:8080
     links:
-      - 'backend'
+      - backend
     volumes:
       - './docker/nginx/hawk-api.conf:/etc/nginx/conf.d/hawk-api.conf'
     volumes_from:
-      - 'backend'
+      - backend
   mongo:
-    image: 'mongo:latest'
+    image: mongo:latest
     ports:
-      - '${MONGO_PORT}:27017'
+      - '27017:27017'
+  memcached:
+    image: 'memcached:alpine'

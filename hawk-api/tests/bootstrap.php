@@ -5,6 +5,9 @@
  */
 define('ROOT', dirname(__DIR__));
 
+ini_set('display_errors', 1);
+ini_set('error_log', 'php_errors.log');
+
 /**
  * Load Composer Autoloader
  */

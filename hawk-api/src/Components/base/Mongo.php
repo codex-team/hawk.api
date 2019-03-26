@@ -7,6 +7,13 @@ namespace App\Components\Base;
 use MongoDB\Client;
 use MongoDB\Database;
 
+/**
+ * Singleton
+ *
+ * Class Mongo
+ *
+ * @package App\Components\Base
+ */
 class Mongo
 {
     /**
@@ -23,6 +30,10 @@ class Mongo
     {
     }
 
+    private function __clone()
+    {
+    }
+
     /**
      * Get connection to Mongo
      *
@@ -36,8 +47,9 @@ class Mongo
             $domain = getenv('MONGO_HOST') ?? 'localhost';
             $port = getenv('MONGO_PORT') ?? 27017;
 
+//            $domain = 'localhost';
             self::$connection = new Client(
-                "mongodb://{$domain}:{$port}", [],
+                sprintf('mongodb://%s:%s', $domain, $port), [],
                 [
                     'typeMap' => [
                         'array' => 'array',
@@ -46,6 +58,7 @@ class Mongo
                     ],
                 ]
             );
+
         }
 
         return self::$connection;

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Components\Base\Mongo;
 use App\Schema\TypeRegistry;
 use Dotenv\Dotenv;
 use GraphQL\Error\Debug;
@@ -32,6 +33,17 @@ if (file_exists(ROOT . '/.env')) {
     $de = new Dotenv(ROOT);
     $de->load();
 }
+
+try {
+    $connection = Mongo::connection();
+    $a = $connection->listDatabases();
+    var_dump($a);
+} catch (\Exception $e) {
+    var_dump($e->getMessage());
+}
+
+
+die;
 
 try {
     //получаем данные запроса в формате JSON

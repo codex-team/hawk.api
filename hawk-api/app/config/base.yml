@@ -1,0 +1,8 @@
+mongo:
+  host: mongo
+  port: 27017
+  db: hawk
+
+memcached:
+  host: localhost
+  port: 11211
