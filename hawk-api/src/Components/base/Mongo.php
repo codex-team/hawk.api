@@ -58,7 +58,6 @@ class Mongo
                     ],
                 ]
             );
-
         }
 
         return self::$connection;

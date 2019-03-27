@@ -12,11 +12,12 @@
     "ext-mongodb": "*"
   },
   "require-dev": {
+    "roave/security-advisories": "dev-master",
     "friendsofphp/php-cs-fixer": "^2.13",
     "phpunit/phpunit": "^7.4"
   },
   "scripts": {
-    "csfix": "vendor/bin/php-cs-fixer fix --verbose",
+    "php-cs-fix": "./bin/php-cs-fixer.sh",
     "test": "./bin/unittests.sh"
   }
 }
