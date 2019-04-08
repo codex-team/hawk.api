@@ -7,14 +7,16 @@
   "require": {
     "mongodb/mongodb": "^1.4",
     "webonyx/graphql-php": "^0.12.6",
-    "vlucas/phpdotenv": "^2.5",
+    "vlucas/phpdotenv": "~3.1",
     "ext-json": "*",
     "ext-mongodb": "*"
   },
   "require-dev": {
     "roave/security-advisories": "dev-master",
     "friendsofphp/php-cs-fixer": "^2.13",
-    "phpunit/phpunit": "^7.4"
+    "phpunit/phpunit": "^7.4",
+    "symfony/yaml": "^4.0",
+    "symfony/var-dumper": "^4.0"
   },
   "scripts": {
     "php-cs-fix": "./bin/php-cs-fixer.sh",

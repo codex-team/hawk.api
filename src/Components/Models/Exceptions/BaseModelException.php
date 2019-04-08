@@ -1,15 +1,13 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Components\Models\Exceptions;
 
 /**
  * Class BaseModelException
- *
  * @package App\Components\Models\Exceptions
  */
-class BaseModelException extends \Exception
+class BaseModelException extends BaseException
 {
     /**
      * BaseModelException constructor.

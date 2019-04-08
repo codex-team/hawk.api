@@ -30,6 +30,9 @@ class Mongo
     {
     }
 
+    /**
+     * Disable cloning
+     */
     private function __clone()
     {
     }
@@ -44,12 +47,8 @@ class Mongo
     public static function connection(): Client
     {
         if (!isset(self::$connection)) {
-            $domain = getenv('MONGO_HOST') ?? 'localhost';
-            $port = getenv('MONGO_PORT') ?? 27017;
-
-//            $domain = 'localhost';
             self::$connection = new Client(
-                sprintf('mongodb://%s:%s', $domain, $port), [],
+                sprintf('mongodb://%s:%s', Configs::get('mongo')['host'], Configs::get('mongo')['port']), [],
                 [
                     'typeMap' => [
                         'array' => 'array',
@@ -72,8 +71,6 @@ class Mongo
      */
     public static function database(string $database = null): Database
     {
-        $db = $database ?? getenv('MONGO_DB');
-
-        return self::connection()->selectDatabase($db);
+        return self::connection()->selectDatabase(Configs::get('mongo')['db'] ?? $database);
     }
 }
