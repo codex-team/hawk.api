@@ -84,6 +84,7 @@ RUN set -ex; \
         msgpack-2.0.2 \
         redis-3.1.3 \
         uopz-5.0.2 \
+        mongodb \
     ; \
     echo "\n" | pecl install ssh2-1.1.2; \
     docker-php-ext-enable --ini-name pecl.ini \
@@ -95,6 +96,7 @@ RUN set -ex; \
         redis \
         ssh2 \
         uopz \
+        mongodb \
     ;
 
 RUN set -ex; \

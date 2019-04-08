@@ -7,7 +7,7 @@ services:
       - memcached
       - mongo
     volumes:
-      - './hawk-api:/var/www/hawk-api'
+      - './:/var/www/hawk-api/'
   nginx:
     image: 'nginx:latest'
     ports:

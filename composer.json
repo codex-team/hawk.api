@@ -18,6 +18,7 @@
   },
   "scripts": {
     "php-cs-fix": "./bin/php-cs-fixer.sh",
-    "test": "./bin/unittests.sh"
+    "test": "./bin/unittests.sh",
+    "composer-install": "./bin/composer-install.sh"
   }
 }
