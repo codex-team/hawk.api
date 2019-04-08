@@ -19,6 +19,6 @@
   "scripts": {
     "php-cs-fix": "./bin/php-cs-fixer.sh",
     "test": "./bin/unittests.sh",
-    "composer-install": "./bin/composer-install.sh"
+    "composer-install": "docker exec -it hawkapi_backend_1 ./bin/composer-install.sh"
   }
 }

@@ -1,222 +1,54 @@
-FROM php:7.2-fpm as builder
+FROM phpdockerio/php73-cli:latest
 
-RUN set -ex; \
-    \
-    apt-get update; \
-    apt-get install -y \
-        autoconf \
-        build-essential \
-        libbsd-dev \
-        libbz2-dev \
-        libc-client2007e-dev \
-        libc6-dev \
-        libcurl3 \
-        libcurl4-openssl-dev \
-        libedit-dev \
-        libedit2 \
-        libgmp-dev \
-        libgpgme11-dev \
-        libicu-dev \
-        libjpeg-dev \
-        libkrb5-dev \
-        libldap2-dev \
-        libmagick++-dev \
-        libmagickwand-dev \
-        libmemcached-dev \
-        libpcre3-dev \
-        libpng-dev \
-        libsqlite3-0 \
-        libsqlite3-dev \
-        libssh2-1-dev \
-        libssl-dev \
-        libtinfo-dev \
-        libtool \
-        libvpx-dev \
-        libwebp-dev \
-        libxml2 \
-        libxml2-dev \
-        libxpm-dev \
-        libxslt1-dev \
-    ; \
-    apt-get clean; \
-    rm -rf /var/lib/apt/lists/*; \
-    \
-    docker-php-ext-configure gd \
-        --with-png-dir=/usr \
-        --with-jpeg-dir=/usr \
-        --with-freetype-dir=/usr \
-        --with-xpm-dir=/usr \
-        --with-webp-dir=/usr \
-        --with-vpx-dir=/usr; \
-    docker-php-ext-configure imap --with-kerberos --with-imap-ssl; \
-    docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu; \
-    docker-php-ext-install \
-        bcmath \
-        bz2 \
-        calendar \
-        dba \
-        exif \
-        gd \
-        gettext \
-        gmp \
-        imap \
-        intl \
-        ldap \
-        mysqli \
-        opcache \
-        pdo_mysql \
-        shmop \
-        soap \
-        sockets \
-        sysvmsg \
-        sysvsem \
-        sysvshm \
-        wddx \
-        xmlrpc \
-        xsl \
-        zip \
-    ; \
-    pecl install \
-        gnupg-1.4.0 \
-        igbinary-2.0.1 \
-        imagick-3.4.3 \
-        memcached-3.0.3 \
-        msgpack-2.0.2 \
-        redis-3.1.3 \
-        uopz-5.0.2 \
-        mongodb \
-    ; \
-    echo "\n" | pecl install ssh2-1.1.2; \
-    docker-php-ext-enable --ini-name pecl.ini \
-        gnupg \
-        igbinary \
-        imagick \
-        memcached \
-        msgpack \
-        redis \
-        ssh2 \
-        uopz \
-        mongodb \
-    ;
+# Update apt and clean cache
+RUN apt-get update && apt-get install -y --no-install-recommends wget && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN set -ex; \
-    \
-    NR_VERSION="$( \
-        curl --connect-timeout 10 -skS https://download.newrelic.com/php_agent/release/ \
-        	| sed -n 's/.*>\(.*linux\).tar.gz<.*/\1/p' \
-    )"; \
-    curl --connect-timeout 10 -o nr.tar.gz -fkSL "https://download.newrelic.com/php_agent/release/$NR_VERSION.tar.gz"; \
-    tar -xf nr.tar.gz; \
-    cp $NR_VERSION/agent/x64/newrelic-20170718.so /usr/local/lib/php/extensions/no-debug-non-zts-20170718/newrelic.so; \
-    mkdir -p /var/log/newrelic; \
-    rm -rf newrelic-php5* nr.tar.gz; \
-    echo "extension=newrelic.so" > /usr/local/etc/php/conf.d/newrelic.ini;
+# Install PHP modules
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git \
+    php7.3-fpm \
+    php7.3-mbstring \
+    php7.3-memcached \
+    php7.3-msgpack \
+    php7.3-xmlrpc \
+    php7.3-intl \
+    php7.3-bcmath \
+    php7.3-igbinary \
+    php7.3-pdo-pgsql \
+    php7.3-gd \
+    php7.3-mongodb \
+    locales \
+    gettext \
+    php-xdebug \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*;
 
-RUN set -ex; \
-    \
-    curl --connect-timeout 10 -o ioncube.tar.gz -fkSL "https://www.ioncube.com/php-7.2.0-beta-loaders/ioncube_loaders_lin_x86-64_BETA.tar.gz"; \
-    tar -zxvf ioncube.tar.gz; \
-    cp ioncube_loader_lin_7.2_10.1.0_beta.so /usr/local/lib/php/extensions/no-debug-non-zts-20170718/ioncube.so; \
-    rm -Rf ioncube*; \
-    echo "zend_extension=ioncube.so" > /usr/local/etc/php/conf.d/01-ioncube.ini;
+# Generate locales
+RUN locale-gen en_US.UTF-8 \
+    && locale-gen ru_RU.UTF-8 \
+    && update-locale;
 
-# Now that all the modules are built/downloaded, use the original php:7.2-fpm image and
-# install only the runtime dependencies with the new modules and config files.
-FROM php:7.2-fpm
+# Install composer
+RUN wget https://getcomposer.org/installer --no-check-certificate \
+    && php installer \
+    && ln -s /composer.phar /usr/bin/composer
 
-WORKDIR /
+# Enabling xDebug
+RUN echo "xdebug.remote_enable=1" >> /etc/php/7.3/mods-available/xdebug.ini \
+    && echo "xdebug.remote_autostart=0" >> /etc/php/7.3/mods-available/xdebug.ini;
 
-RUN set -ex ; \
-    \
-    apt-get update && apt-get install -y --no-install-recommends \
-        libc-client2007e \
-        libgpgme11 \
-        libicu57 \
-        libmagickwand-6.q16-3 \
-        libmcrypt4 \
-        libmemcached11 \
-        libmemcachedutil2 \
-        libpng16-16 \
-        libvpx4 \
-        libwebp6 \
-        libxpm4 \
-        libxslt1.1 \
-        ssmtp \
-        ; \
-    rm -rf /tmp/pear /usr/share/doc /usr/share/man /var/lib/apt/lists/*; \
-    cd /usr/local/etc/php; \
-    php-fpm -v 2>/dev/null | sed -E 's/PHP ([5|7].[0-9]{1,2}.[0-9]{1,2})(.*)/\1/g' | head -n1 > php_version.txt;
+# Configure FPM
+RUN sed -i "/listen = .*/c\listen = [::]:9000" /etc/php/7.3/fpm/pool.d/www.conf \
+    && sed -i "/;access.log = .*/c\access.log = /proc/self/fd/2" /etc/php/7.3/fpm/pool.d/www.conf \
+    && sed -i "/;clear_env = .*/c\clear_env = no" /etc/php/7.3/fpm/pool.d/www.conf \
+    && sed -i "/;catch_workers_output = .*/c\catch_workers_output = yes" /etc/php/7.3/fpm/pool.d/www.conf \
+    && sed -i "/pid = .*/c\;pid = /run/php/php7.1-fpm.pid" /etc/php/7.3/fpm/php-fpm.conf \
+    && sed -i "/;daemonize = .*/c\daemonize = no" /etc/php/7.3/fpm/php-fpm.conf \
+    && sed -i "/error_log = .*/c\error_log = /proc/self/fd/2" /etc/php/7.3/fpm/php-fpm.conf \
+    && usermod -u 1000 www-data
+CMD /usr/sbin/php-fpm7.3 -F -O 2>&1 | sed -u 's,.*: \"\(.*\)$,\1,'| sed -u 's,"$,,' 1>&1
 
-COPY --from=builder /usr/local/lib/php/extensions/no-debug-non-zts-20170718/ /usr/local/lib/php/extensions/no-debug-non-zts-20170718/
-COPY --from=builder /usr/local/etc/php/conf.d/ /usr/local/etc/php/conf.d/
-
-RUN pear install --alldeps \
-        Auth_SASL \
-        Auth_SASL2-beta \
-        Benchmark \
-        pear.php.net/Console_Color2-0.1.2 \
-        Console_Table \
-        HTTP_OAuth-0.3.1 \
-        HTTP_Request2 \
-        Log \
-        Mail \
-        MDB2 \
-        Net_GeoIP \
-        Net_SMTP \
-        Net_Socket \
-        XML_RPC2 \
-        pear.symfony.com/YAML \
-    ;
-
-RUN set -ex \
-    && { \
-        echo '[global]'; \
-        echo 'daemonize = no'; \
-        echo 'error_log = /proc/self/fd/2'; \
-        echo; \
-        echo '[www]'; \
-        echo 'listen = [::]:9000'; \
-        echo 'listen.owner = www-data'; \
-        echo 'listen.group = www-data'; \
-        echo; \
-        echo 'user = www-data'; \
-        echo 'group = www-data'; \
-        echo; \
-        echo 'access.log = /proc/self/fd/2'; \
-        echo; \
-        echo 'pm = static'; \
-        echo 'pm.max_children = 1'; \
-        echo 'pm.start_servers = 1'; \
-        echo 'request_terminate_timeout = 65s'; \
-        echo 'pm.max_requests = 1000'; \
-        echo 'catch_workers_output = yes'; \
-    } | tee /usr/local/etc/php-fpm.d/www.conf \
-    && mkdir -p /usr/local/php/php/auto_prepends \
-    && { \
-        echo '<?php'; \
-        echo 'if (function_exists("uopz_allow_exit")) {'; \
-        echo '    uopz_allow_exit(true);'; \
-        echo '}'; \
-        echo '?>'; \
-    } | tee /usr/local/php/php/auto_prepends/default_prepend.php \
-    && { \
-        echo 'FromLineOverride=YES'; \
-        echo 'mailhub=127.0.0.1'; \
-        echo 'UseTLS=NO'; \
-        echo 'UseSTARTTLS=NO'; \
-    } | tee /etc/ssmtp/ssmtp.conf \
-    && { \
-        echo '[PHP]'; \
-        echo 'log_errors = On'; \
-        echo 'error_log = /dev/stderr'; \
-        echo 'auto_prepend_file = /usr/local/php/php/auto_prepends/default_prepend.php'; \
-    } | tee /usr/local/etc/php/conf.d/php.ini \
-    ;
-
-# Install Composer
-RUN curl -sS https://getcomposer.org/installer | php
-RUN mv composer.phar /usr/local/bin/composer
-
+# Set working directory
 WORKDIR /var/www/hawk-api
 
-CMD ["php-fpm"]
+# Listen 9000 port
+EXPOSE 9000
