@@ -50,6 +50,8 @@ class Configs
     }
 
     /**
+     * @param mixed $component
+     *
      * @return array
      */
     public static function get($component = ''): array

@@ -1,12 +1,14 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Components\Models;
 
 use App\Components\Base\Mongo;
-use App\Components\Models\Exceptions\BaseModelException;
-use App\Components\Models\Exceptions\RecordNotFoundException;
+use App\Components\Models\Exceptions\{
+    BaseModelException,
+    RecordNotFoundException
+};
+
 use MongoDB\BSON\ObjectId;
 use MongoDB\Collection;
 

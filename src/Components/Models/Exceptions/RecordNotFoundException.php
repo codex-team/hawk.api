@@ -6,6 +6,7 @@ namespace App\Components\Models\Exceptions;
 
 /**
  * Class RecordNotFoundException
+ *
  * @package App\Components\Models\Exceptions
  */
 class RecordNotFoundException extends BaseException

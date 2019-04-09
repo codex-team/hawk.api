@@ -1,17 +1,20 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Schema;
 
-use App\Schema\Types\Requests\Mutation;
-use App\Schema\Types\Requests\Query;
+use App\Schema\Types\Requests\{
+    Mutation,
+    Query
+};
 
-use App\Schema\Types\Archive;
-use App\Schema\Types\Membership;
-use App\Schema\Types\Project;
-use App\Schema\Types\Team;
-use App\Schema\Types\User;
+use App\Schema\Types\{
+    Archive,
+    Project,
+    Membership,
+    Team,
+    User
+};
 
 /**
  * Class TypeRegistry

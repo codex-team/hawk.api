@@ -21,7 +21,7 @@ if (PHP_SAPI === 'cli') {
     exit;
 }
 
-require_once dirname(__DIR__) . '/app/init.php';
+require_once dirname(__DIR__) . '/app/bootstrap.php';
 
 try {
     /**

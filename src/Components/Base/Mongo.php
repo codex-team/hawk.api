@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Components\Base;
 
-use MongoDB\Client;
-use MongoDB\Database;
+use MongoDB\ {
+    Client,
+    Database
+};
 
 /**
  * Singleton

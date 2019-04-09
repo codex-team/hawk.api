@@ -5,6 +5,7 @@ namespace App\Components\Models\Exceptions;
 
 /**
  * Class BaseModelException
+ *
  * @package App\Components\Models\Exceptions
  */
 class BaseModelException extends BaseException
