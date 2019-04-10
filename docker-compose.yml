@@ -7,15 +7,7 @@ services:
       - memcached
       - mongo
     volumes:
-      - './app/:/var/www/hawk-api/app:ro'
-      - './bin/:/var/www/hawk-api/bin:ro'
-      - './public/:/var/www/hawk-api/public:ro'
-      - './src/:/var/www/hawk-api/src:ro'
-      - './vendor:/var/www/hawk-api/vendor:ro'
-      - './composer.json:/var/www/hawk-api/composer.json:ro'
-      - './phpunit.xml:/var/www/hawk-api/phpunit.xml:ro'
-      - './.env/:/var/www/hawk-api/.env:ro'
-      - './.php_cs:/var/www/hawk-api/.php_cs:ro'
+      - './:/var/www/hawk-api/'
     working_dir: '/var/www/hawk-api'
   nginx:
     image: 'nginx:latest'
