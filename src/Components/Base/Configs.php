@@ -42,24 +42,22 @@ class Configs
         $filename = sprintf('%s/base.yml', ROOT . '/app/config');
 
         if (is_readable($filename)) {
-            $base = file_get_contents($filename);
-            $base_config = Yaml::parse($base);
+            $base = Yaml::parse(file_get_contents($filename));
         }
 
         self::$_isDebug = getenv('DEBUG');
 
         if (self::$_isDebug) {
-            $additional = sprintf('%s/development.yml', ROOT . '/app/config');
+            $filename = sprintf('%s/development.yml', ROOT . '/app/config');
         } else {
-            $additional = sprintf('%s/production.yml', ROOT . '/app/config');
+            $filename = sprintf('%s/production.yml', ROOT . '/app/config');
         }
 
-        if (is_readable($additional)) {
-            $environment = file_get_contents($additional);
-            $environment_config = Yaml::parse($environment);
+        if (is_readable($filename)) {
+            $environment = Yaml::parse(file_get_contents($filename));
         }
 
-        self::$_config = array_merge($base_config, $environment_config);
+        self::$_config = array_merge($base, $environment);
     }
 
     /**
