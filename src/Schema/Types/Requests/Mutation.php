@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Schema\Types\Requests;
 
+use App\Components\Base\Mail;
 use App\Components\Models\{Membership, Project, Team, User};
 use App\Schema\TypeRegistry;
 use GraphQL\Type\Definition\{
@@ -22,6 +23,39 @@ class Mutation extends ObjectType
         $config = [
             'fields' => function () {
                 return [
+                    'register' => [
+                        'type' => TypeRegistry::user(),
+                        'description' => 'Register a new user',
+                        'args' => [
+                            'email' => [
+                                'type' => Type::nonNull(Type::string()),
+                                'description' => 'Email address'
+                            ],
+                        ],
+                        'resolve' => function ($root, $args) {
+                            $user = new User();
+
+                            if (User::findOne($args)) {
+                                //TODO: как вернуть ошибку??
+                                return [];
+                            }
+
+                            $password = User::generatePassword(User::DEFAULT_PASSWORD_LENGTH);
+
+                            $args['password'] = $password;
+
+                            if ($user->sync($args)) {
+                                Mail::sendViaSMTP(
+                                    $args['email'],
+                                    'Hello!',
+                                    'join.twig',
+                                    ['password' => $password]
+                                );
+                            }
+
+                            return $user;
+                        }
+                    ],
                     'user' => [
                         'type' => TypeRegistry::user(),
                         'description' => 'Sync User',
