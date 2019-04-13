@@ -1,0 +1,18 @@
+mongo:
+  host: mongo
+  port: 27017
+  db: hawk
+
+memcached:
+  host: memcached
+  port: 11211
+
+mailgun:
+  key:
+  domain:
+  from:
+
+smtp:
+  host:
+  username:
+  password:
