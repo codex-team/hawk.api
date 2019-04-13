@@ -12,7 +12,7 @@ final class Project extends BaseModel
      *
      * @var string
      */
-    protected $collectionName = 'projects';
+    protected static $collectionName = 'projects';
 
     /**
      * Unique identifier
@@ -98,11 +98,7 @@ final class Project extends BaseModel
      */
     public function user(): User
     {
-        $user = new User();
-
-        $user->findById($this->uidAdded);
-
-        return $user;
+        return User::findById($this->uidAdded);
     }
 
     /**

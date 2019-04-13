@@ -25,7 +25,9 @@ abstract class BaseModel
      *
      * @var string
      */
-    protected $collectionName = '';
+    protected static $collectionName = '';
+
+//    protected $collectionFields = [];
 
     /**
      * Base Model's constructor
@@ -61,10 +63,25 @@ abstract class BaseModel
      * Can be redeclared to modify $args before sync
      *
      * @param $args array Values as assoc array to synchronise
+     *
+     * @return bool
      */
-    public function sync(array $args): void
+    public function sync(array $args): bool
     {
+        /**
+         * TODO: рассмотреть данный вариант, заполнение модели через коснтурктор, в sync() передаются дополнительные аргументы
+         * print_r(array_filter(
+         *     get_object_vars($this),
+         *     function($k) {
+         *         return in_array($k, $this->collectionFields, true);
+         *     },
+         *     ARRAY_FILTER_USE_KEY
+         * ));
+         */
+
         $this->fillModel($this->baseSync($args));
+
+        return true;
     }
 
     /**
@@ -76,7 +93,7 @@ abstract class BaseModel
      */
     protected function baseSync(array $args): array
     {
-        if ($args['_id'] != null) {
+        if (array_key_exists('_id', $args) && $args['_id'] !== null) {
             $mongoResult = $this->update($args);
         } else {
             $mongoResult = $this->save($args);
@@ -94,7 +111,7 @@ abstract class BaseModel
      */
     protected function save(array $args): array
     {
-        $args['_id'] = $this->assocCollection()->insertOne($args)->getInsertedId();
+        $args['_id'] = self::assocCollection()->insertOne($args)->getInsertedId();
 
         return $args;
     }
@@ -124,11 +141,11 @@ abstract class BaseModel
             'returnDocument' => \MongoDB\Operation\FindOneAndUpdate::RETURN_DOCUMENT_AFTER
         ];
 
-        $mongoResult = $this->assocCollection()->findOneAndUpdate($filter, $update, $options);
+        $mongoResult = self::assocCollection()->findOneAndUpdate($filter, $update, $options);
 
         if ($mongoResult === null) {
             throw new RecordNotFoundException(
-                sprintf("No record found to update in collection '%s'", $this->getCollectionName())
+                sprintf("No record found to update in collection '%s'", self::getCollectionName())
             );
         }
 
@@ -149,7 +166,7 @@ abstract class BaseModel
             $filter['_id'] = new ObjectId($filter['_id']);
         }
 
-        $cursor = $this->assocCollection()->find($filter);
+        $cursor = self::assocCollection()->find($filter);
 
         $result = [];
 
@@ -164,20 +181,28 @@ abstract class BaseModel
      * Find and fill model by _id
      *
      * @param string $_id Identifier of searching record
+     *
+     * @return static|null
      */
-    public function findById(string $_id): void
+    public static function findById(string $_id)
     {
-        $this->fillModel($this->findOneWrapper(['_id' => $_id]));
+        $result = self::findOneWrapper(['_id' => $_id]);
+
+        return $result ? new static($result) : null;
     }
 
     /**
      * Find and fill model by filter
      *
      * @param array $filter Filter to find record
+     *
+     * @return static|null
      */
-    public function findOne(array $filter): void
+    public static function findOne(array $filter)
     {
-        $this->fillModel($this->findOneWrapper($filter));
+        $result = self::findOneWrapper($filter);
+
+        return $result ? new static($result) : null;
     }
 
     /**
@@ -185,25 +210,15 @@ abstract class BaseModel
      *
      * @param array $filter Filter to find record
      *
-     * @throws RecordNotFoundException
-     *
-     * @return array
+     * @return array|null
      */
-    public function findOneWrapper(array $filter = []): array
+    public static function findOneWrapper(array $filter = []): ?array
     {
         if (array_key_exists('_id', $filter) && (!$filter['_id'] instanceof ObjectId)) {
             $filter['_id'] = new ObjectId($filter['_id']);
         }
 
-        $mongoResult = $this->assocCollection()->findOne($filter);
-
-        if ($mongoResult === null) {
-            throw new RecordNotFoundException(
-                sprintf("No record found in collection '%s'", $this->getCollectionName())
-            );
-        }
-
-        return $mongoResult;
+        return self::assocCollection()->findOne($filter);
     }
 
     /**
@@ -213,22 +228,22 @@ abstract class BaseModel
      *
      * @return string
      */
-    private function getCollectionName(): string
+    private static function getCollectionName(): string
     {
-        if (empty($this->collectionName)) {
+        if (empty(static::$collectionName)) {
             throw new BaseModelException('Collection name is not defined');
         }
 
-        return $this->collectionName;
+        return static::$collectionName;
     }
 
     /**
      * Get the associated collection
      *
-     * @return \MongoDB\Collection
+     * @return Collection
      */
-    protected function assocCollection(): Collection
+    protected static function assocCollection(): Collection
     {
-        return Mongo::database()->{$this->getCollectionName()};
+        return Mongo::database()->{static::getCollectionName()};
     }
 }
