@@ -17,7 +17,7 @@ class Twig
     private static $twig;
 
     /**
-     * Create and get Twig instance
+     * Render templates
      *
      * @param string $template
      * @param array  $variables
