@@ -42,7 +42,7 @@ class Mutation extends ObjectType
 
                             $password = User::generatePassword(User::DEFAULT_PASSWORD_LENGTH);
 
-                            $args['password'] = $password;
+                            $args['password'] = password_hash($password, PASSWORD_BCRYPT);
 
                             if ($user->sync($args)) {
                                 Mail::sendViaSMTP(
