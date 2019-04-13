@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Schema\Types;
 
 use App\Components\Models\{
-    Project as ProjectModel,
+    Project as ProjectModel
 };
 use App\Schema\TypeRegistry;
 use GraphQL\Type\Definition\{
