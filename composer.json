@@ -10,7 +10,11 @@
     "vlucas/phpdotenv": "~3.1",
     "ext-json": "*",
     "ext-mongodb": "*",
-    "twig/twig": "^2.7"
+    "twig/twig": "^2.7",
+    "mailgun/mailgun-php": "^2.8",
+    "kriswallsmith/buzz": "^1.0",
+    "nyholm/psr7": "^1.1",
+    "phpmailer/phpmailer": "^6.0"
   },
   "require-dev": {
     "roave/security-advisories": "dev-master",
