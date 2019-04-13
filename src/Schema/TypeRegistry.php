@@ -10,8 +10,8 @@ use App\Schema\Types\Requests\{
 
 use App\Schema\Types\{
     Archive,
-    Project,
     Membership,
+    Project,
     Team,
     User
 };
