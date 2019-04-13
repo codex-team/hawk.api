@@ -6,3 +6,13 @@ mongo:
 memcached:
   host: memcached
   port: 11211
+
+mailgun:
+  key: 55f10fb2b2eb9d0572b923d1ea89cb11-6140bac2-cd318c83
+  domain: sandbox779b76142c204c21ab113a98bca600e2.mailgun.org
+  from: no-reply@sandbox779b76142c204c21ab113a98bca600e2.mailgun.org
+
+smtp:
+  host:
+  username:
+  password:

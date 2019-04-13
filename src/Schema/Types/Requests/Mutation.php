@@ -53,7 +53,7 @@ class Mutation extends ObjectType
                                 );
                             }
 
-                            return $user;
+                            return [];
                         }
                     ],
                     'user' => [
