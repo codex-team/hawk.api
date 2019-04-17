@@ -8,7 +8,18 @@ use Twig\Loader\FilesystemLoader;
 
 class Twig
 {
-    private const TEMPLATES_PATH = ROOT . '/src/views/templates';
+    /**
+     * Path to templates folder
+     *
+     * @var string
+     */
+    private const TEMPLATES_PATH = ROOT . '/src/templates';
+
+    /**
+     * Path to compiled templates folder
+     *
+     * @var string
+     */
     private const TEMPLATES_CACHE_PATH = ROOT . '/app/cache/templates';
 
     /**
