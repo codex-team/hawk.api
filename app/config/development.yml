@@ -14,5 +14,6 @@ mailgun:
 
 smtp:
   host:
+  port:
   username:
   password:

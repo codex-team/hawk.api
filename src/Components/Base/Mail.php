@@ -13,7 +13,7 @@ use PHPMailer\PHPMailer\PHPMailer;
  */
 class Mail
 {
-    /** @var  Mailgun */
+    /** @var Mailgun */
     private static $mg;
     /** @var PHPMailer */
     private static $mailer;
@@ -64,7 +64,7 @@ class Mail
      * @param string $email
      * @param string $subject
      * @param string $template
-     * @param array $variables
+     * @param array  $variables
      *
      * @throws Exception
      *
@@ -96,11 +96,11 @@ class Mail
             $mailer = new PHPMailer(true);
             $mailer->isSMTP();
             $mailer->Host = Configs::get('smtp')['host'];
+            $mailer->Port = Configs::get('smtp')['port'];
             $mailer->SMTPAuth = true;
             $mailer->Username = Configs::get('smtp')['username'];
             $mailer->Password = Configs::get('smtp')['password'];
             $mailer->SMTPSecure = 'tls';
-            $mailer->Port = 587;
             $mailer->CharSet = 'UTF-8';
             self::$mailer = $mailer;
         }
