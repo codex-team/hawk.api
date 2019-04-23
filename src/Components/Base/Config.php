@@ -75,6 +75,6 @@ class Config
      */
     public static function isDebug(): bool
     {
-        return self::$_isDebug;
+        return self::$_isDebug === 'true';
     }
 }
