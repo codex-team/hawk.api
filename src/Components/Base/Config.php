@@ -6,9 +6,9 @@ namespace App\Components\Base;
 use Symfony\Component\Yaml\Yaml;
 
 /**
- * Base Class Configs
+ * Base Class Config
  */
-class Configs
+class Config
 {
     /**
      * @var array
@@ -21,7 +21,7 @@ class Configs
     private static $_isDebug = true;
 
     /**
-     * Configs constructor.
+     * Config constructor.
      */
     private function __construct()
     {
