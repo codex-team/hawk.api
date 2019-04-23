@@ -71,8 +71,6 @@ class Mail
      * @param string $template
      * @param array  $variables
      *
-     * @throws Exception
-     *
      * @return bool
      */
     public static function sendViaSMTP(string $email, string $subject, string $template, array $variables = []): bool
@@ -80,14 +78,18 @@ class Mail
         $render = Twig::renderTwigTemplate($template, $variables);
         $mailer = self::getMailerInstance();
 
-        $mailer->setFrom(Config::get('smtp')['username'], 'HAWK');
-        $mailer->addAddress($email, 'User >:|');
+        try {
+            $mailer->setFrom(Config::get('smtp')['username'], 'HAWK');
+            $mailer->addAddress($email, 'User >:|');
 
-        $mailer->isHTML();
-        $mailer->Subject = $subject;
-        $mailer->Body = $render;
+            $mailer->isHTML();
+            $mailer->Subject = $subject;
+            $mailer->Body = $render;
 
-        return $mailer->send();
+            return $mailer->send();
+        } catch (Exception $e) {
+            return false;
+        }
     }
 
     /**
