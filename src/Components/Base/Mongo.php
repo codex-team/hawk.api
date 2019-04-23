@@ -50,7 +50,7 @@ class Mongo
     {
         if (!isset(self::$connection)) {
             self::$connection = new Client(
-                sprintf('mongodb://%s:%s', Configs::get('mongo')['host'], Configs::get('mongo')['port']), [],
+                sprintf('mongodb://%s:%s', Config::get('mongo')['host'], Config::get('mongo')['port']), [],
                 [
                     'typeMap' => [
                         'array' => 'array',
@@ -73,6 +73,6 @@ class Mongo
      */
     public static function database(string $database = null): Database
     {
-        return self::connection()->selectDatabase(Configs::get('mongo')['db'] ?? $database);
+        return self::connection()->selectDatabase(Config::get('mongo')['db'] ?? $database);
     }
 }
