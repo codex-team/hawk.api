@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App;
 
 use App\Schema\TypeRegistry;
+use Exception;
 use GraphQL\Error\Debug;
 use GraphQL\GraphQL;
 use GraphQL\Type\Schema;
@@ -55,9 +56,9 @@ try {
     /**
      * Исполняем запрос и дебажим исполнение
      */
-    $debug = Debug::INCLUDE_DEBUG_MESSAGE | Debug::INCLUDE_TRACE;
+    $debug = getenv('DEBUG') ? Debug::INCLUDE_DEBUG_MESSAGE | Debug::INCLUDE_TRACE: false;
     $result = GraphQL::executeQuery($schema, $query, null, null, $variables)->toArray($debug);
-} catch (\Exception $e) {
+} catch (Exception $e) {
     $result = [
         'error' => [
             'message' => $e->getMessage()
