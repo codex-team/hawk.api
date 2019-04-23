@@ -33,8 +33,8 @@ class Mail
         $render = Twig::renderTwigTemplate($template, $variables);
         $mg = self::getMailgunInstance();
 
-        $mg->messages()->send(Configs::get('mailgun')['domain'], [
-                'from' => Configs::get('mailgun')['from'],
+        $mg->messages()->send(Config::get('mailgun')['domain'], [
+                'from' => Config::get('mailgun')['from'],
                 'to' => $email,
                 'subject' => $subject,
                 'html' => $render
@@ -52,7 +52,7 @@ class Mail
     private static function getMailgunInstance(): Mailgun
     {
         if (!isset(self::$mg)) {
-            self::$mg = Mailgun::create(Configs::get('mailgun')['key']);
+            self::$mg = Mailgun::create(Config::get('mailgun')['key']);
         }
 
         return self::$mg;
@@ -75,7 +75,7 @@ class Mail
         $render = Twig::renderTwigTemplate($template, $variables);
         $mailer = self::getMailerInstance();
 
-        $mailer->setFrom(Configs::get('smtp')['username'], 'HAWK');
+        $mailer->setFrom(Config::get('smtp')['username'], 'HAWK');
         $mailer->addAddress($email, 'User >:|');
 
         $mailer->isHTML();
@@ -95,11 +95,11 @@ class Mail
         if (!isset(self::$mailer)) {
             $mailer = new PHPMailer(true);
             $mailer->isSMTP();
-            $mailer->Host = Configs::get('smtp')['host'];
-            $mailer->Port = Configs::get('smtp')['port'];
+            $mailer->Host = Config::get('smtp')['host'];
+            $mailer->Port = Config::get('smtp')['port'];
             $mailer->SMTPAuth = true;
-            $mailer->Username = Configs::get('smtp')['username'];
-            $mailer->Password = Configs::get('smtp')['password'];
+            $mailer->Username = Config::get('smtp')['username'];
+            $mailer->Password = Config::get('smtp')['password'];
             $mailer->SMTPSecure = 'tls';
             $mailer->CharSet = 'UTF-8';
             self::$mailer = $mailer;
