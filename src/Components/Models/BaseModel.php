@@ -11,6 +11,7 @@ use App\Components\Models\Exceptions\{
 
 use MongoDB\BSON\ObjectId;
 use MongoDB\Collection;
+use MongoDB\Operation\FindOneAndUpdate;
 
 /**
  * Class BaseModel
@@ -93,7 +94,7 @@ abstract class BaseModel
      */
     protected function baseSync(array $args): array
     {
-        if (array_key_exists('_id', $args) && $args['_id'] !== null) {
+        if (!empty($args['_id'])) {
             $mongoResult = $this->update($args);
         } else {
             $mongoResult = $this->save($args);
@@ -138,7 +139,7 @@ abstract class BaseModel
         ];
 
         $options = [
-            'returnDocument' => \MongoDB\Operation\FindOneAndUpdate::RETURN_DOCUMENT_AFTER
+            'returnDocument' => FindOneAndUpdate::RETURN_DOCUMENT_AFTER
         ];
 
         $mongoResult = self::assocCollection()->findOneAndUpdate($filter, $update, $options);
