@@ -44,9 +44,7 @@ final class User extends BaseModel
      */
     public static function generatePassword(int $length): string
     {
-        $chars = '1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcefghijklmnopqrstuvwxyz';
-
-        return substr(str_shuffle($chars), 0, $length);
+        return bin2hex(openssl_random_pseudo_bytes( $length / 2));
     }
 
     /**
