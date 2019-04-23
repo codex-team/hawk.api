@@ -6,9 +6,9 @@ namespace App\Components\Base;
 use Symfony\Component\Yaml\Yaml;
 
 /**
- * Base Class Configs
+ * Base Class Config
  */
-class Configs
+class Config
 {
     /**
      * @var array
@@ -21,7 +21,7 @@ class Configs
     private static $_isDebug = true;
 
     /**
-     * Configs constructor.
+     * Config constructor.
      */
     private function __construct()
     {
@@ -37,16 +37,27 @@ class Configs
     /**
      * Load base.yml from config file
      */
-    public static function init()
+    public static function init(): void
     {
         $filename = sprintf('%s/base.yml', ROOT . '/app/config');
 
         if (is_readable($filename)) {
-            $yml = file_get_contents($filename);
-            self::$_config = Yaml::parse($yml);
+            $base = Yaml::parse(file_get_contents($filename));
         }
 
         self::$_isDebug = getenv('DEBUG');
+
+        if (self::$_isDebug) {
+            $filename = sprintf('%s/development.yml', ROOT . '/app/config');
+        } else {
+            $filename = sprintf('%s/production.yml', ROOT . '/app/config');
+        }
+
+        if (is_readable($filename)) {
+            $environment = Yaml::parse(file_get_contents($filename));
+        }
+
+        self::$_config = array_merge($base, $environment);
     }
 
     /**
