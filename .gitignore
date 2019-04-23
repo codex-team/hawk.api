@@ -5,4 +5,5 @@
 vendor
 app/cache
 app/config/production.yml
+app/config/development.yml
 public/php_errors.log
