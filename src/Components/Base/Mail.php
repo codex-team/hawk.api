@@ -13,12 +13,13 @@ use PHPMailer\PHPMailer\PHPMailer;
  */
 class Mail
 {
-    /** 
-     * @var Mailgun 
+    /**
+     * @var Mailgun
      */
     private static $mg;
-    /** 
-     * @var PHPMailer 
+
+    /**
+     * @var PHPMailer
      */
     private static $mailer;
 

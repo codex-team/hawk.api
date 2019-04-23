@@ -56,7 +56,7 @@ try {
     /**
      * Исполняем запрос и дебажим исполнение
      */
-    $debug = getenv('DEBUG') ? Debug::INCLUDE_DEBUG_MESSAGE | Debug::INCLUDE_TRACE: false;
+    $debug = Config::isDebug() ? Debug::INCLUDE_DEBUG_MESSAGE | Debug::INCLUDE_TRACE : false;
     $result = GraphQL::executeQuery($schema, $query, null, null, $variables)->toArray($debug);
 } catch (Exception $e) {
     $result = [
