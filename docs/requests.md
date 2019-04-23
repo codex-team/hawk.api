@@ -2,7 +2,7 @@
 
 ### Registration
 ```graphql
-mutation {
+mutation Reg {
   register(
     email: "hawk@gmail.com"
   ) {
