@@ -17,7 +17,9 @@ class Mail
      * @var Mailgun 
      */
     private static $mg;
-    /** @var PHPMailer */
+    /** 
+     * @var PHPMailer 
+     */
     private static $mailer;
 
     /**
