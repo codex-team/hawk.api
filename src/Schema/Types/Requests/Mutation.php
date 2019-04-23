@@ -6,6 +6,7 @@ namespace App\Schema\Types\Requests;
 use App\Components\Base\Mail;
 use App\Components\Models\{Membership, Project, Team, User};
 use App\Schema\TypeRegistry;
+use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\{
     ObjectType,
     Type
@@ -36,8 +37,7 @@ class Mutation extends ObjectType
                             $user = new User();
 
                             if (User::findOne($args)) {
-                                //TODO: как вернуть ошибку??
-                                return [];
+                                return new UserError('Email is already taken');
                             }
 
                             $password = User::generatePassword(User::DEFAULT_PASSWORD_LENGTH);
