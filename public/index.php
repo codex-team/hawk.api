@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Components\Base\Config;
 use App\Schema\TypeRegistry;
 use Exception;
 use GraphQL\Error\Debug;
