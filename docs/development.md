@@ -2,8 +2,9 @@
 API to save/retrieve all data, related to the Hawk.io.
 
 ## Docker Installation
-1. Download and setup Docker from the official [site](https://www.docker.com/products/docker-desktop)
-2. In project root directory run `docker-compose up --build`
+1. Before installation follow the 'setup configuration' chapter
+2. Download and setup Docker from the official [site](https://www.docker.com/products/docker-desktop)
+3. In project root directory run `docker-compose up --build`
 
 API will be available at 8080 port\
 MongoDB will be available at 27017 port
@@ -11,7 +12,7 @@ MongoDB will be available at 27017 port
 ## Setup configurations
 
 To setup application in any environment copy `base.yml` which is
-in `app/config` folder.
+in `app/config` folder and copy and rename `.env.example` to `.env`
 
 There are two cases of configuration usage: development or production modes
 
