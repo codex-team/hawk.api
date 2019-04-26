@@ -1,34 +1,12 @@
 # The GraphQL HAWK.API Server
 API to save/retrieve all data, related to the Hawk.io.
 
-## Installation
-
-### Docker
+## Docker Installation
 1. Download and setup Docker from the official [site](https://www.docker.com/products/docker-desktop)
-2. In project root directory run ```docker-compose up --build```
+2. In project root directory run `docker-compose up --build`
 
-### Server
-1. Install PHP@7.2 or greater with required dependencies
-```bash
-add-apt-repository ppa:ondrej/php
-apt-get install nginx php php-pear php-dev php-mbstring unzip -y
-pecl install mongodb
-
-```
-
-3. Configure php.ini file to add extension=mongodb.so
-```
-php --ini
-(path for example will be – Loaded Configuration File: /usr/local/etc/php/7.2/php.ini)
-echo "extension=mongodb.so" >> /usr/local/etc/php/7.2/php.ini
-
-```
-
-2. Follow this [link](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/) to install the correct version of MongoDB
-
-3. Follow this [link](https://getcomposer.org/download/) to install Composer and then make it global
-
-4. Configure your nginx according to this [article](https://ifmo.su/devops-basics)
+API will be available at 8080 port\
+MongoDB will be available at 27017 port
 
 ## Setup configurations
 
