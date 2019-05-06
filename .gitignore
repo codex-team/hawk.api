@@ -3,5 +3,7 @@
 .env
 .php_cs.cache
 vendor
-
+app/cache
 app/config/production.yml
+app/config/development.yml
+public/php_errors.log

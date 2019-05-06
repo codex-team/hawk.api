@@ -1,39 +1,18 @@
 # The GraphQL HAWK.API Server
 API to save/retrieve all data, related to the Hawk.io.
 
-## Installation
+## Docker Installation
+1. Before installation follow the 'setup configuration' chapter
+2. Download and setup Docker from the official [site](https://www.docker.com/products/docker-desktop)
+3. In project root directory run `docker-compose up --build`
 
-### Docker
-1. Download and setup Docker from the official  <a href="https://www.docker.com/products/docker-desktop">site</a>
-2. In project root directory run ```docker-compose up --build```
-
-### Server
-1. Install PHP@7.2 or greater with required dependencies
-```
-add-apt-repository ppa:ondrej/php
-apt-get install nginx php php-pear php-dev php-mbstring unzip -y
-pecl install mongodb
-
-```
-
-3. Configure php.ini file to add extension=mongodb.so
-```
-php --ini
-(path for example will be – Loaded Configuration File: /usr/local/etc/php/7.2/php.ini)
-echo "extension=mongodb.so" >> /usr/local/etc/php/7.2/php.ini
-
-```
-
-2. Follow this <a href="https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/">link</a> to install the correct version of MongoDB
-
-3. Follow this <a href="https://getcomposer.org/download/">link</a> to install Composer and then make it global
-
-4. Configure your nginx according to this <a href="https://ifmo.su/devops-basics">article</a>
+API will be available at 8080 port\
+MongoDB will be available at 27017 port
 
 ## Setup configurations
 
 To setup application in any environment copy `base.yml` which is
-in `app/config` folder.
+in `app/config` folder and copy and rename `.env.example` to `.env`
 
 There are two cases of configuration usage: development or production modes
 
@@ -41,4 +20,23 @@ There are two cases of configuration usage: development or production modes
 `development.yml` and set `DEBUG=true` in `.env` file
 
 2) If you want to use in production, name file `production.yml` and set
-`DEBUG=false` in `.env` file 
+`DEBUG=false` in `.env` file
+
+### Mailing
+
+In the project you are free to use any of two available mail services – [Mailgun](https://www.mailgun.com) and plain SMTP.
+
+If you wish to use the first one, you have to create an account at Mailgun and write in `development.yml` or `production.yml` the following properties from this [page](https://app.mailgun.com/app/dashboard):
+- API Key is for `key`
+- Domain name is for `domain`
+- Anything is for `from`
+
+For using plain SMTP you must have only your mail account at any popular mail service (Yandex, Gmail, etc.) and fill `development.yml` or `production.yml`. Example:
+```yaml
+smtp:
+  host: smtp.yandex.com
+  port: 587
+  username: hawk@yandex.ru
+  password: HawkIsBird
+```
+

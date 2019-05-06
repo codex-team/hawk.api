@@ -5,12 +5,14 @@ namespace App\Components\Models;
 
 final class User extends BaseModel
 {
+    public const DEFAULT_PASSWORD_LENGTH = 10;
+
     /**
      * Associated collection's name
      *
      * @var string
      */
-    protected $collectionName = 'users';
+    protected static $collectionName = 'users';
 
     /**
      * User's unique identifier
@@ -32,6 +34,18 @@ final class User extends BaseModel
      * @var string|null
      */
     public $password;
+
+    /**
+     * Generate random password
+     *
+     * @param int $length
+     *
+     * @return string
+     */
+    public static function generatePassword(int $length): string
+    {
+        return bin2hex(openssl_random_pseudo_bytes($length / 2));
+    }
 
     /**
      * Get user's projects

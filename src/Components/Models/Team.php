@@ -53,7 +53,7 @@ final class Team extends BaseModel
     public function __construct(string $projectId, array $args = [])
     {
         $this->projectId = $projectId;
-        $this->collectionName = sprintf(self::COLLECTION_NAME_PATTERN, $projectId);
+        self::$collectionName = sprintf(self::COLLECTION_NAME_PATTERN, $projectId);
         parent::__construct($args);
     }
 
@@ -61,8 +61,10 @@ final class Team extends BaseModel
      * Remove projectId and convert userId to ObjectId before sync
      *
      * @param array $args Values as assoc array to sync model
+     *
+     * @return bool
      */
-    public function sync(array $args): void
+    public function sync(array $args): bool
     {
         $args['userId'] = new ObjectId($args['userId']);
         parent::sync($args);
@@ -85,7 +87,7 @@ final class Team extends BaseModel
             $filter['userId'] = new ObjectId($filter['userId']);
         }
 
-        $cursor = $this->assocCollection()->find($filter);
+        $cursor = self::assocCollection()->find($filter);
 
         $result = [];
 
@@ -103,10 +105,6 @@ final class Team extends BaseModel
      */
     public function user(): User
     {
-        $user = new User();
-
-        $user->findById($this->userId);
-
-        return $user;
+        return User::findById($this->userId);
     }
 }

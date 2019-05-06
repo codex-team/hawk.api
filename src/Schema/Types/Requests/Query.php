@@ -29,11 +29,7 @@ class Query extends ObjectType
                             '_id' => Type::nonNull(Type::id()),
                         ],
                         'resolve' => function ($root, $args) {
-                            $user = new User();
-
-                            $user->findById($args['_id']);
-
-                            return $user;
+                            return User::findById($args['_id']);
                         }
                     ],
                     'project' => [
@@ -43,11 +39,7 @@ class Query extends ObjectType
                             '_id' => Type::nonNull(Type::id()),
                         ],
                         'resolve' => function ($root, $args) {
-                            $user = new Project();
-
-                            $user->findById($args['_id']);
-
-                            return $user;
+                            return Project::findById($args['_id']);
                         }
                     ],
                     'team' => [
